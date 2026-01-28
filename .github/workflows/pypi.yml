@@ -1,0 +1,56 @@
+name: PyPI 📦 Build 🛠️ & Deploy
+on:
+  workflow_call:
+    inputs:
+      index:
+        required: false
+        default: 'testpypi'
+        type: string
+      deploy:
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+      - name: Build a binary wheel and a source tarball
+        run: uv build
+      - name: Run smoke tests (wheel)
+        uses: ./.github/actions/smoke-tests
+        with:
+          command: uv run --isolated --no-project --with dist/*.whl
+      - name: Run smoke tests (sdist)
+        uses: ./.github/actions/smoke-tests
+        with:
+          command: uv run --isolated --no-project --with dist/*.tar.gz
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v6
+        with:
+          name: package-build
+          path: dist/
+
+  deploy:
+    needs: build
+    if: ${{ inputs.deploy }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.index }}
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+      - name: Download artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: package-build
+          path: dist/
+      - name: Publish distribution
+        run: uv publish --index ${{ inputs.index }}

@@ -1,0 +1,29 @@
+name: GitHub
+
+on:
+  workflow_call:
+
+concurrency:
+  group: github-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  enforce-label:
+    if: github.event_name != 'merge_group'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: yogevbd/enforce-label-action@2.2.2
+        with:
+          REQUIRED_LABELS_ANY: "caching,ci,dependencies,docs,examples,fix,linting,maintenance,new feature,refactoring,tests"
+          REQUIRED_LABELS_ANY_DESCRIPTION: Assign at least one label [caching,ci,dependencies,docs,examples,fix,linting,maintenance,new feature,refactoring,tests] to this pull request
+          BANNED_LABELS: bug
+          BANNED_LABELS_DESCRIPTION: The 'bug' label should only be used on issues
+
+  check-conflicts:
+    if: github.event_name != 'merge_group'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Merge conflict finder
+        uses: olivernybroe/action-conflict-finder@v4.0

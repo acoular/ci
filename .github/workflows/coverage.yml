@@ -1,0 +1,45 @@
+name: Coverage
+
+on:
+  workflow_call:
+
+concurrency:
+  group: coverage-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+      - name: Set up PortAudio
+        uses: ./.github/actions/setup-portaudio
+      - name: Generate coverage report
+        run: |
+          uv run --frozen python -m pytest --cov=${{ github.event.repository.name }}
+          uv run --frozen python -m pytest --cov=${{ github.event.repository.name }} --cov-report=markdown-append:$GITHUB_STEP_SUMMARY --cov-report=xml --cov-append --doctest-modules ${{ github.event.repository.name }}
+      - name: Check diff coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} > diff.txt
+          echo -e "Output of \`diff-cover\` :mag::shipit:\n\`\`\`" > diff-cover.txt
+          uv run diff-cover coverage.xml --diff-file=diff.txt >> diff-cover.txt
+          echo -e "\`\`\`" >> diff-cover.txt
+      - name: Add PR Comment
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          file-path: diff-cover.txt
+          comment-tag: diffcov
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload coverage HTML report
+          path: htmlcov

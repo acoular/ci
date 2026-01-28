@@ -1,0 +1,16 @@
+name: 'Smoke Tests'
+description: 'Run Smoke Tests'
+inputs:
+  command:
+    description: 'The uv command to invoke the smoke tests.'
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Test Import
+      run: ${{ inputs.command }} python -c "import ${{ github.event.repository.name }}"
+      shell: bash
+    - name: Run Demo
+      if: ${{ github.event.repository.name }} == 'acoular'
+      run: ${{ inputs.command }} python -m acoular.demo
+      shell: bash

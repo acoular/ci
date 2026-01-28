@@ -1,0 +1,43 @@
+name: Linting and Formatting
+
+on:
+  workflow_call:
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+      - name: Run ruff linter
+        run: uv run --frozen --dev ruff check
+      - name: Run ruff formatter
+        run: uv run --frozen --dev ruff format --check
+
+  validate-cff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Check whether the citation metadata from CITATION.cff is valid
+        uses: citation-file-format/cffconvert-github-action@2.0.0
+        with:
+          args: --validate
+
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2.7.0
+        with:
+          # Check all markdown, html and reStructuredText files in repo (default)
+          args: --root-dir $(pwd) --verbose --no-progress './**/*.md' './**/*.html' './**/*.rst'
+          fail: true

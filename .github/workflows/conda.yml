@@ -1,0 +1,47 @@
+name: Conda 🐍 Build 🛠️ & Deploy
+on:
+  workflow_call:
+    inputs:
+      deploy:
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install conda-build
+        run: conda install -n base conda-build
+      - name: Check out a copy of the repository
+        uses: actions/checkout@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+      - name: Build package
+        run: |
+          export VERSION=$(uvx hatchling version)  # use hatch-vcs here until uv supports dynamic versions. track: https://github.com/astral-sh/uv/issues/14137
+          conda run -n base conda build --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v6
+        with:
+          name: conda-build
+          path: conda-pkg/
+
+  deploy:
+    needs: build
+    if: ${{ inputs.deploy }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.index }}
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: conda-build
+          path: conda-pkg/
+      - name: Upload conda package to Anaconda Cloud
+        if: ${{ github.event_name =='workflow_dispatch' && github.ref == 'refs/heads/master' }}
+        run: |
+          conda run -n base anaconda login --username ${{ secrets.ANACONDA_USERNAME }} --password ${{ secrets.ANACONDA_PASSWORD }}
+          conda run -n base anaconda upload ./conda-pkg/noarch/*.conda

@@ -42,3 +42,4 @@ jobs:
           # Check all markdown, html and reStructuredText files in repo (default)
           args: --root-dir $(pwd) --no-progress './**/*.md' './**/*.html' './**/*.rst'
           fail: true
+          failIfEmpty: false

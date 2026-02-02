@@ -32,7 +32,7 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ inputs.deploy && github.ref == 'refs/heads/master' }}
+    if: ${{ inputs.deploy }}
     runs-on: ubuntu-latest
     environment:
       name: anaconda

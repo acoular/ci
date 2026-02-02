@@ -29,11 +29,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Set up PortAudio
-        uses: ./.github/actions/setup-portaudio
+        uses: acoular/ci/.github/actions/setup-portaudio@main
         with:
           os: ${{ matrix.os }}
       - name: Set up Graphviz
-        uses: ./.github/actions/setup-graphviz
+        uses: acoular/ci/.github/actions/setup-graphviz@main
         with:
           os: ${{ matrix.os }}
       - name: Run sphinx

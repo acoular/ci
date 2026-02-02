@@ -19,7 +19,7 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
       - name: Set up PortAudio
-        uses: ./.github/actions/setup-portaudio
+        uses: acoular/ci/.github/actions/setup-portaudio@main
       - name: Generate coverage report
         run: |
           uv run --frozen python -m pytest --cov=${{ github.event.repository.name }}

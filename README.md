@@ -1,5 +1,8 @@
 # Acoular Organizational CI
 
+## Permissions
+- Permissions are set *restrictive* for the entire organization. This means that specific permissions need to be configured for every workflow.
+
 ## Secrets
 - We configure CI such that all secrets and access tokens are defined in environments. This allows for granular control of access. Additionally, every GitHub workflow that requires access to an environment secret should require additional approval by select accounts (not teams).
 

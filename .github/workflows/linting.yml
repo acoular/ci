@@ -39,5 +39,5 @@ jobs:
         uses: lycheeverse/lychee-action@v2.7.0
         with:
           # Check all markdown, html and reStructuredText files in repo (default)
-          args: --root-dir $(pwd) --verbose --no-progress './**/*.md' './**/*.html' './**/*.rst'
+          args: --root-dir $(pwd) --no-progress './**/*.md' './**/*.html' './**/*.rst'
           fail: true

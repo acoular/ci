@@ -44,4 +44,5 @@ jobs:
           path: conda-pkg/
       - name: Upload conda package to Anaconda Cloud
         run: |
-          conda run -n base anaconda -v --token $ANACONDA_TOKEN upload --user acoular ./conda-pkg/noarch/*.conda
+          conda run -n base anaconda login --token $ANACONDA_TOKEN
+          conda run -n base anaconda upload ./conda-pkg/noarch/*.conda

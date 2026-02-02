@@ -47,7 +47,7 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ inputs.deploy && github.ref == github.event.repository.default_branch }}
+    if: ${{ inputs.deploy }}
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts

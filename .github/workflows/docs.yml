@@ -14,8 +14,6 @@ concurrency:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    permissions:
-      artifact-metadata: write
     strategy:
       fail-fast: false
       matrix:

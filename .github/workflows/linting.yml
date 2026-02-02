@@ -1,5 +1,6 @@
 name: Linting and Formatting
-
+permissions:
+  contents: read
 on:
   workflow_call:
 

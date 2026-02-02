@@ -1,4 +1,6 @@
 name: PyPI 📦 Build 🛠️ & Deploy
+permissions:
+  contents: read
 on:
   workflow_call:
     inputs:

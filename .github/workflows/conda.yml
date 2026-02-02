@@ -30,10 +30,10 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ inputs.deploy }}
+    if: ${{ inputs.deploy && github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     environment:
-      name: ${{ inputs.index }}
+      name: anaconda
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v7
@@ -41,7 +41,5 @@ jobs:
           name: conda-build
           path: conda-pkg/
       - name: Upload conda package to Anaconda Cloud
-        if: ${{ github.event_name =='workflow_dispatch' && github.ref == 'refs/heads/master' }}
         run: |
-          conda run -n base anaconda login --username ${{ secrets.ANACONDA_USERNAME }} --password ${{ secrets.ANACONDA_PASSWORD }}
-          conda run -n base anaconda upload ./conda-pkg/noarch/*.conda
+          conda run -n base anaconda -v --token $ANACONDA_TOKEN upload --user acoular ./conda-pkg/noarch/*.conda

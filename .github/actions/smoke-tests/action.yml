@@ -7,10 +7,17 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get package name
+      env:
+        PKG_NAME: ${{ github.event.repository.name }}
+      run: |
+        PKG_NAME=${{env.PKG_NAME}}
+        PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores
+        echo PKG_NAME=${PKG_NAME} >> $GITHUB_ENV
     - name: Test Import
-      run: ${{ inputs.command }} python -c "import ${{ github.event.repository.name }}"
+      run: ${{ inputs.command }} python -c "import ${{ env.PKG_NAME }}"
       shell: bash
     - name: Run Demo
-      if: ${{ github.event.repository.name }} == 'acoular'
+      if: ${{ env.PKG_NAME }} == 'acoular'
       run: ${{ inputs.command }} python -m acoular.demo
       shell: bash

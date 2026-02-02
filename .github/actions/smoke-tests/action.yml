@@ -10,6 +10,7 @@ runs:
     - name: Get package name
       env:
         PKG_NAME: ${{ github.event.repository.name }}
+      shell: bash
       run: |
         PKG_NAME=${{env.PKG_NAME}}
         PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores

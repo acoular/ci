@@ -10,6 +10,8 @@ concurrency:
 jobs:
   coverage:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v5

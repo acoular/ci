@@ -3,9 +3,11 @@ name: Tests
 on:
   workflow_call:
     inputs:
-      src_dir: string
-      required: false
-      default: ${{ github.event.repository.name }}
+      src_dir:
+        description: 'The path to the src directory.'
+        type: string
+        required: false
+        default: ${{ github.event.repository.name }}
 
 concurrency:
   group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

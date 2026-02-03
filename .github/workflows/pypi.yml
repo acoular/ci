@@ -1,17 +1,8 @@
-name: PyPI 📦 Build 🛠️ & Deploy
+name: PyPI 📦 Build
 permissions:
   contents: read
 on:
   workflow_call:
-    inputs:
-      index:
-        required: false
-        default: 'testpypi'
-        type: string
-      deploy:
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   build:
@@ -37,24 +28,3 @@ jobs:
         with:
           name: package-build
           path: dist/
-
-  deploy:
-    needs: build
-    if: ${{ inputs.deploy }}
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-    environment:
-      name: ${{ inputs.index }}
-    steps:
-      - name: Check out a copy of the repository
-        uses: actions/checkout@v6
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v7
-      - name: Download artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: package-build
-          path: dist/
-      - name: Publish distribution
-        run: uv publish --index ${{ inputs.index }}

@@ -12,6 +12,10 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    inputs:
+      src_dir: string
+      required: false
+      default: ${{ github.event.repository.name }}
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v5
@@ -21,18 +25,10 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: Set up PortAudio
         uses: acoular/ci/.github/actions/setup-portaudio@main
-      - name: Get package name
-        env:
-          PKG_NAME: ${{ github.event.repository.name }}
-        shell: bash
-        run: |
-          PKG_NAME=${{env.PKG_NAME}}
-          PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores
-          echo PKG_NAME=${PKG_NAME} >> $GITHUB_ENV
       - name: Generate coverage report
         run: |
-          uv run --frozen python -m pytest --cov=${{ env.PKG_NAME }}
-          uv run --frozen python -m pytest --cov=${{ env.PKG_NAME }} --cov-report=markdown-append:$GITHUB_STEP_SUMMARY --cov-report=xml --cov-append --doctest-modules ${{ github.event.repository.name }}
+          uv run --frozen python -m pytest --cov=${{ inputs.src_dir }}
+          uv run --frozen python -m pytest --cov=${{ inputs.src_dir }} --cov-report=markdown-append:$GITHUB_STEP_SUMMARY --cov-report=xml --cov-append --doctest-modules ${{ github.event.repository.name }}
       - name: Check diff coverage
         if: ${{ github.event_name == 'pull_request' }}
         run: |

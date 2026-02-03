@@ -15,6 +15,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.10','3.11','3.12', '3.13']
+    inputs:
+      src_dir: string
+      required: false
+      default: ${{ github.event.repository.name }}
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v6
@@ -35,13 +39,5 @@ jobs:
           command: uv run --frozen --no-dev --exact
       - name: Run unit tests
         run: uv run --frozen python -m pytest
-      - name: Get package name
-        env:
-          PKG_NAME: ${{ github.event.repository.name }}
-        shell: bash
-        run: |
-          PKG_NAME=${{env.PKG_NAME}}
-          PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores
-          echo PKG_NAME=${PKG_NAME} >> $GITHUB_ENV
       - name: Run doctests
-        run: uv run --frozen python -m pytest --doctest-modules ${{ env.PKG_NAME }}
+        run: uv run --frozen python -m pytest --doctest-modules ${{ inputs.src_dir }}

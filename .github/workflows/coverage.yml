@@ -30,7 +30,7 @@ jobs:
       - name: Generate coverage report
         run: |
           uv run --frozen python -m pytest --cov=${{ inputs.src_dir }}
-          uv run --frozen python -m pytest --cov=${{ inputs.src_dir }} --cov-report=markdown-append:$GITHUB_STEP_SUMMARY --cov-report=xml --cov-append --doctest-modules ${{ github.event.repository.name }}
+          uv run --frozen python -m pytest --cov=${{ inputs.src_dir }} --cov-report=markdown-append:$GITHUB_STEP_SUMMARY --cov-report=xml --cov-append --doctest-modules ${{ inputs.src_dir }}
       - name: Check diff coverage
         if: ${{ github.event_name == 'pull_request' }}
         run: |

@@ -2,6 +2,10 @@ name: Tests
 
 on:
   workflow_call:
+    inputs:
+      src_dir: string
+      required: false
+      default: ${{ github.event.repository.name }}
 
 concurrency:
   group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -15,10 +19,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.10','3.11','3.12', '3.13']
-    inputs:
-      src_dir: string
-      required: false
-      default: ${{ github.event.repository.name }}
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v6

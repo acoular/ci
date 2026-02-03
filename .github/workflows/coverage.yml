@@ -1,6 +1,10 @@
 name: Coverage
 on:
   workflow_call:
+    inputs:
+      src_dir: string
+      required: false
+      default: ${{ github.event.repository.name }}
 
 concurrency:
   group: coverage-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -12,10 +16,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    inputs:
-      src_dir: string
-      required: false
-      default: ${{ github.event.repository.name }}
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v5

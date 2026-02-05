@@ -32,6 +32,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - uses: conda-incubator/setup-miniconda@v3
         with:
@@ -39,14 +42,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
           activate-environment: acoular
           channels: acoular
-      - name: Activate environment
-        run: conda activate acoular
       - name: Check Anaconda installation
-        run: conda install acoular
+        run: conda -n acoular install acoular
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
-          command: ''
+          command: 'conda run -n acoular'
 
   uv:
     name: Install repo with uv

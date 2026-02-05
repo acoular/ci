@@ -43,7 +43,7 @@ jobs:
           activate-environment: acoular
           channels: acoular
       - name: Check Anaconda installation
-        run: conda -n acoular install acoular
+        run: conda install -n acoular acoular
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:

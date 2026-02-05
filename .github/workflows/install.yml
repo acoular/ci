@@ -37,9 +37,11 @@ jobs:
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
+          activate-environment: acoular
+          channels: acoular
       - name: Check Anaconda installation
-        run: conda run -n acoular conda install acoular::acoular
+        run: conda install acoular
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
-          command: 'conda run -n acoular'
+          command: ''

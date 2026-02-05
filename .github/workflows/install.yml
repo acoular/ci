@@ -1,0 +1,13 @@
+name: Check latest install
+on:
+  workflow_call
+
+jobs:
+  pypi:
+    name: Install from PyPI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ vars.LATEST_PYTHON_VERSION }}
+      - run: pip install acoular

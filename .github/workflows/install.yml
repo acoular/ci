@@ -1,4 +1,6 @@
 name: Check latest install
+permissions:
+  contents: none
 on:
   workflow_call
 

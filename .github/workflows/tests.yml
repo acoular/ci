@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ${{ vars.SUPPORTED_PYTHON }}
+        python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     steps:
       - name: Check out a copy of the repository
         uses: actions/checkout@v6

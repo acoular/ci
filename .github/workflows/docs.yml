@@ -27,6 +27,10 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ vars.LATEST_PYTHON_VERSION }}
+      - name: Set up Pandoc  # for AcouPipe
+        uses: acoular/ci/.github/actions/setup-pandoc@main
+        with:
+          os: ${{ matrix.os }}
       - name: Set up PortAudio
         uses: acoular/ci/.github/actions/setup-portaudio@main
         with:

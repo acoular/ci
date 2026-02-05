@@ -2,7 +2,12 @@ name: Check links
 permissions:
   contents: read
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      extra_args:
+        descriptions: 'Extra arguments to pass to Lychee.'
+        type: string
+        required: false
 
 jobs:
   link-check:
@@ -14,6 +19,6 @@ jobs:
         uses: lycheeverse/lychee-action@v2.7.0
         with:
           # Check all markdown, html and reStructuredText files in repo (default)
-          args: --root-dir $(pwd) --no-progress './**/*.md' './**/*.html' './**/*.rst'
+          args: --root-dir $(pwd) --no-progress './**/*.md' './**/*.html' './**/*.rst' ${{ inputs.extra_args }}
           fail: true
           failIfEmpty: false

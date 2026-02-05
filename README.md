@@ -1,7 +1,7 @@
 # Acoular Organizational CI
 
 ## Python versions
-- The workflows assumes that there exists a repository variable `SUPPORTED_PYTHON_VERSIONS` with value `["3.10", "3.11", "3.12", "3.13"]` and `LATEST_PYTHON_VERSION` with value `["3.13"]` or similar that lists the supported Python versions of the package. **Note**: need to use double quotes.
+- The workflows assumes that there exists a repository variable `SUPPORTED_PYTHON_VERSIONS` with value `["3.10", "3.11", "3.12", "3.13"]` and `LATEST_PYTHON_VERSION` with value `3.13` or similar that lists the supported Python versions of the package. **Note**: need to use double quotes for the array and no quotes for a single version.
 - These are configured as organizational variables so do not need to be set explicitly. However, they can be overriden by setting them in the repository or environment scope.
 
 ## Permissions

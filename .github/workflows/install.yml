@@ -20,7 +20,7 @@ jobs:
       - name: Check PyPI installation
         run: |
           pip install acoular
-          python -m "import acoular"
+          python -c "import acoular"
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:

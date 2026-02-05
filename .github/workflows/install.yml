@@ -41,8 +41,7 @@ jobs:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
           activate-environment: acoular
-          channels: acoular
-          conda-remove-defaults: true
+          channels: acoular, defaults
       - name: Check Anaconda installation
         run: conda install -n acoular acoular
       - name: Run smoke tests

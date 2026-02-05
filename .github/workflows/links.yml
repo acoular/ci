@@ -5,7 +5,7 @@ on:
   workflow_call:
     inputs:
       extra_args:
-        descriptions: 'Extra arguments to pass to Lychee.'
+        description: 'Extra arguments to pass to Lychee.'
         type: string
         required: false
 

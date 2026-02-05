@@ -39,15 +39,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
           activate-environment: acoular
           channels: acoular
+      - name: Activate environment
+        run: conda activate acoular
       - name: Check Anaconda installation
-        run: |
-          conda info
-          conda list
-          conda install acoular
+        run: conda install acoular
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
-          command: 'conda run -n acoular'
+          command: ''
 
   uv:
     name: Install repo with uv

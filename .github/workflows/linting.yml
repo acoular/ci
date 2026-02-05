@@ -30,6 +30,3 @@ jobs:
         uses: citation-file-format/cffconvert-github-action@2.0.0
         with:
           args: --validate
-
-  link-check:
-    uses: acoular/ci/.github/workflows/links.yml@main

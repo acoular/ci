@@ -1,5 +1,8 @@
 # Acoular Organizational CI
 
+## Python versions
+- The workflows assume that there exists a repository variable `SUPPORTED_PYTHON=['3.10','3.11','3.12','3.13']` or similar that lists the supported Python versions of the package.
+
 ## Permissions
 - Permissions are set *restrictive* for the entire organization. This means that specific permissions need to be configured for every workflow.
 - **Only** define permissions in `workflow.yml` if it is really necessary. E.g., `contents: read` is the default and not needed. Defining this would make it cumbersome to change defaults. Nonetheless, we add a `contents: read` block to the top of each workflow to keep CodeQL happy and doubly enforce least priviledge.

@@ -20,7 +20,6 @@ jobs:
       - name: Check PyPI installation
         run: |
           pip install acoular
-          python -c "import acoular"
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
@@ -36,7 +35,7 @@ jobs:
         python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     defaults:
       run:
-        shell: bash -el {0}
+        shell: bash -e {0}
     steps:
       - uses: conda-incubator/setup-miniconda@v3
         with:

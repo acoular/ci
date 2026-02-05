@@ -10,9 +10,24 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ vars.LATEST_PYTHON_VERSION }}
+      - name: Upgrade pip
+        run: pip install --upgrade pip
       - name: Check PyPI installation
         run: pip install acoular
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
           command: ''
+
+  conda:
+    name: Install from Anaconda
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create environment
+        run: conda create -n acoular
+      - name: Check Anaconda installation
+        run: conda run -n acoular conda install acoular::acoular
+      - name: Run smoke tests
+        uses: acoular/ci/.github/actions/smoke-tests@main
+        with:
+          command: 'conda run -n acoular'

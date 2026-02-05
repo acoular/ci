@@ -37,7 +37,7 @@ jobs:
         python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     defaults:
       run:
-        shell: bash -e {0}
+        shell: bash -el {0}
     steps:
       - uses: conda-incubator/setup-miniconda@v3
         with:

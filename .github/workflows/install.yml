@@ -44,7 +44,7 @@ jobs:
       - name: Run smoke tests
         uses: acoular/ci/.github/actions/smoke-tests@main
         with:
-          command: ''
+          command: 'conda run -n acoular'
 
   uv:
     name: Install repo with uv

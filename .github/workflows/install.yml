@@ -5,11 +5,16 @@ on:
 jobs:
   pypi:
     name: Install from PyPI
-    runs-on: ubuntu-latest
+     runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     steps:
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ vars.LATEST_PYTHON_VERSION }}
+          python-version: ${{ matrix.python-version }}
       - name: Upgrade pip
         run: pip install --upgrade pip
       - name: Check PyPI installation
@@ -21,10 +26,14 @@ jobs:
 
   conda:
     name: Install from Anaconda
-    runs-on: ubuntu-latest
+     runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - name: Create environment
-        run: conda create -n acoular
+        run: conda create -n acoular python=${{ matrix.python-version }}
       - name: Check Anaconda installation
         run: conda run -n acoular conda install acoular::acoular
       - name: Run smoke tests

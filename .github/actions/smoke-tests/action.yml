@@ -10,10 +10,6 @@ runs:
     - name: Determine shell args for OS
       env:
         SHELL_ARGS: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
-      run: |
-        echo ${{ runner.os }}
-        echo "$SHELL_ARGS"
-      shell: bash
     - name: Get package name
       env:
         PKG_NAME: ${{ github.event.repository.name }}

@@ -7,18 +7,22 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Determine shell args for OS
+      env:
+        SHELL: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
+      run: echo ${{ runner.os }} -> $SHELL
     - name: Get package name
       env:
         PKG_NAME: ${{ github.event.repository.name }}
-      shell: bash -el {0}
+      shell: env.SHELL
       run: |
         PKG_NAME=${{env.PKG_NAME}}
         PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores
         echo PKG_NAME=${PKG_NAME} >> $GITHUB_ENV
     - name: Test Import
       run: ${{ inputs.command }} python -c "import ${{ env.PKG_NAME }}"
-      shell: bash -el {0}
+      shell: env.SHELL
     - name: Run Demo
       if: ${{ env.PKG_NAME }} == 'acoular'
       run: ${{ inputs.command }} python -m acoular.demo
-      shell: bash -el {0}
+      shell: env.SHELL

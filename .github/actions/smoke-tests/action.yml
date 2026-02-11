@@ -11,6 +11,7 @@ runs:
       env:
         SHELL: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
       run: echo ${{ runner.os }} -> $SHELL
+      shell: bash
     - name: Get package name
       env:
         PKG_NAME: ${{ github.event.repository.name }}

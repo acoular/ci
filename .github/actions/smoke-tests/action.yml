@@ -9,21 +9,21 @@ runs:
   steps:
     - name: Determine shell args for OS
       env:
-        SHELL: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
+        SHELL_ARGS: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
       run: echo ${{ runner.os }} -> $SHELL
       shell: bash
     - name: Get package name
       env:
         PKG_NAME: ${{ github.event.repository.name }}
-      shell: env.SHELL
+      shell: env.SHELL_ARGS
       run: |
         PKG_NAME=${{env.PKG_NAME}}
         PKG_NAME=${PKG_NAME//-/_} # replace hyphens with undescores
         echo PKG_NAME=${PKG_NAME} >> $GITHUB_ENV
     - name: Test Import
       run: ${{ inputs.command }} python -c "import ${{ env.PKG_NAME }}"
-      shell: env.SHELL
+      shell: env.SHELL_ARGS
     - name: Run Demo
       if: ${{ env.PKG_NAME }} == 'acoular'
       run: ${{ inputs.command }} python -m acoular.demo
-      shell: env.SHELL
+      shell: env.SHELL_ARGS

@@ -20,6 +20,6 @@ runs:
       run: ${{ inputs.command }} python -c "import ${{ env.PKG_NAME }}"
       shell: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}
     - name: Run Demo
-      if: ${{ env.PKG_NAME }} == 'acoular'
+      if: env.PKG_NAME == 'acoular'
       run: ${{ inputs.command }} python -m acoular.demo
       shell: ${{ case(runner.os == 'macOS', 'bash -e {0}', 'bash -el {0}' ) }}

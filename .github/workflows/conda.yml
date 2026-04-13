@@ -23,7 +23,7 @@ jobs:
       - name: Build package
         run: |
           export VERSION=$(uvx hatchling version)  # use hatch-vcs here until uv supports dynamic versions. track: https://github.com/astral-sh/uv/issues/14137
-          conda run -n base conda build --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
+          conda run -n base conda build --channel acoular --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
       - name: Store the distribution packages
         uses: actions/upload-artifact@v6
         with:

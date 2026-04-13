@@ -39,6 +39,6 @@ jobs:
         with:
           command: uv run --frozen --no-dev --exact
       - name: Run unit tests
-        run: uv run --frozen python -m pytest -v
+        run: uv run --frozen --exact --group tests python -m pytest -v
       - name: Run doctests
-        run: uv run --frozen python -m pytest -v --doctest-modules ${{ inputs.src_dir }}
+        run: uv run --frozen --exact --group tests python -m pytest -v --doctest-modules ${{ inputs.src_dir }}

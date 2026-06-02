@@ -12,7 +12,7 @@ inputs:
     required: false
     default: '/en/'
   min-version:
-    description: 'Oldest tag to include, e.g. v25.01. Empty string includes all tags.'
+    description: 'Oldest tag to include, e.g. v26.01. Empty string includes all tags.'
     required: false
     default: ''
   output:
@@ -51,7 +51,7 @@ runs:
             key=version_key, reverse=True,
         )
 
-        versions = [{"name": "latest", "url": f"{base_path}latest/", "type": "branch"}]
+        versions = [{"name": "latest", "version": "vXX.XX", "url": f"{base_path}latest/", "type": "branch"}]
 
         latest_stable = None
         for tag in filtered:
@@ -60,13 +60,14 @@ runs:
                     latest_stable = tag
                     versions.append({
                         "name": f"{tag} (stable)",
+                        "version": tag,
                         "url": f"{base_path}{tag}/",
                         "type": "tag",
                         "preferred": True,
                     })
                 else:
                     versions.append({
-                        "name": tag,
+                        "version": tag,
                         "url": f"{base_path}{tag}/",
                         "type": "tag",
                     })

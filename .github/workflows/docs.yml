@@ -8,6 +8,10 @@ on:
         required: false
         default: false
         type: boolean
+      html_baseurl:
+        required: false
+        default: ''
+        type: string
 
 concurrency:
   group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -40,6 +44,8 @@ jobs:
         with:
           os: ${{ matrix.os }}
       - name: Run sphinx
+        env:
+          DOCS_BASEURL: ${{ inputs.html_baseurl }}
         run: uv run --frozen --exact --group docs make -C docs html
       - name: Upload artifacts
         if: ${{ matrix.os == 'ubuntu-latest' }}

@@ -1,0 +1,82 @@
+name: Generate Switcher JSON
+description: >
+  Generate a pydata-sphinx-theme switcher.json from git tags.
+  Reads tags merged into HEAD, filters by pattern, and writes JSON
+  with versioned URLs for the version-switcher navbar widget.
+
+inputs:
+  base-path:
+    description: >
+      URL prefix for all versioned doc paths.
+      Acoular: /en/  |  SpectAcoular (future): /spectacoular/en/
+    required: false
+    default: '/en/'
+  min-version:
+    description: 'Oldest tag to include, e.g. v25.01. Empty string includes all tags.'
+    required: false
+    default: ''
+  output:
+    description: 'Output path for switcher.json, relative to repo root'
+    required: false
+    default: 'docs/source/_static/switcher.json'
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Generate switcher.json
+      shell: python3 {0}
+      run: |
+        import subprocess, json, re, os
+
+        base_path  = "${{ inputs.base-path }}"
+        min_ver    = "${{ inputs.min-version }}"
+        output     = "${{ inputs.output }}"
+
+        result = subprocess.run(
+            ['git', 'tag', '--merged', 'HEAD', '--list', 'v*'],
+            capture_output=True, text=True,
+        )
+        tags = result.stdout.strip().split('\n') if result.stdout.strip() else []
+
+        def version_key(tag):
+            m = re.match(r'v(\d+)\.(\d+)', tag)
+            return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+
+        filtered = sorted(
+            [t for t in tags if re.match(r'^v\d+\.\d+$', t)],
+            key=version_key, reverse=True,
+        )
+
+        versions = [{"name": "latest", "url": f"{base_path}latest/", "type": "branch"}]
+
+        latest_stable = None
+        for tag in filtered:
+            if not min_ver or version_key(tag) >= version_key(min_ver):
+                if latest_stable is None:
+                    latest_stable = tag
+                    versions.append({
+                        "name": f"{tag} (stable)",
+                        "url": f"{base_path}{tag}/",
+                        "type": "tag",
+                        "preferred": True,
+                    })
+                else:
+                    versions.append({
+                        "name": tag,
+                        "url": f"{base_path}{tag}/",
+                        "type": "tag",
+                    })
+
+        parent = os.path.dirname(output)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
+        with open(output, 'w') as f:
+            json.dump(versions, f, indent=2)
+
+        print(f"Generated {output} with {len(versions)} versions")
+        if latest_stable:
+            print(f"Latest stable: {latest_stable}")

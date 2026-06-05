@@ -1,4 +1,4 @@
-exclude = ["docs/source", ".git"]
+extend-exclude = ["docs/source", ".git"]
 line-length = 120
 
 [lint]

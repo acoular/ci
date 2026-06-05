@@ -3,9 +3,9 @@
 #------------------------------------------------------------------------------
 
 [project]
-name = "acoular-ci"
+name = "acoular-ruff"
 version = "0.1.0"
-description = "Common CI and development configuration for the Acoular Organization"
+description = "Common ruff configuration for the Acoular organization"
 requires-python = ">=3.11,<3.15"
 authors = [
     {name = "Acoular Development Team", email = "info@acoular.org"},
@@ -13,7 +13,7 @@ authors = [
 readme = "README.md"
 license = {file = "LICENSE"}
 dependencies = [
-    "ruff>=0.15.16",
+    "ruff==0.15.16",
 ]
 
 [build-system]

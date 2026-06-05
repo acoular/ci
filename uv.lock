@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.11, <3.15"
 
 [[package]]
-name = "acoular-ci"
+name = "acoular-ruff"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ruff", specifier = ">=0.15.16" }]
+requires-dist = [{ name = "ruff", specifier = "==0.15.16" }]
 
 [[package]]
 name = "ruff"

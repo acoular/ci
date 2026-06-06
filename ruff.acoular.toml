@@ -33,6 +33,12 @@ numpy = "np"
 "scipy.linalg" = "spla"
 "matplotlib.pyplot" = "plt"
 
+# custom sort order to prevent wrong load order due to numpy/numba threading issue
+[lint.isort]
+section-order = ["future", "standard-library", "acoular", "first-party", "local-folder", "third-party"]
+[lint.isort.sections]
+acoular = ["acoular", "spectacoular", "acoupipe"]
+
 [lint.pycodestyle]
 ignore-overlong-task-comments = true
 max-doc-length = 100

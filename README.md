@@ -4,19 +4,6 @@
 - The workflows assumes that there exists a repository variable `SUPPORTED_PYTHON_VERSIONS` with value `["3.10", "3.11", "3.12", "3.13"]` and `LATEST_PYTHON_VERSION` with value `3.13` or similar that lists the supported Python versions of the package. **Note**: need to use double quotes for the array and no quotes for a single version.
 - These are configured as organizational variables so do not need to be set explicitly. However, they can be overriden by setting them in the repository or environment scope.
 
-## PortAudio
-- The `tests`, `docs`, and `coverage` reusable workflows install PortAudio by default.
-- Repositories that do not need PortAudio can disable this setup with the optional `setup_portaudio` input:
-
-```yaml
-jobs:
-  tests:
-    uses: acoular/ci/.github/workflows/tests.yml@main
-    with:
-      src_dir: acoupipe
-      setup_portaudio: false
-```
-
 ## Permissions
 - Permissions are set *restrictive* for the entire organization. This means that specific permissions need to be configured for every workflow.
 - **Only** define permissions in `workflow.yml` if it is really necessary. E.g., `contents: read` is the default and not needed. Defining this would make it cumbersome to change defaults. Nonetheless, we add a `contents: read` block to the top of each workflow to keep CodeQL happy and doubly enforce least priviledge.
@@ -34,3 +21,17 @@ Environments are hardcoded. Currently, there are
 ## Deployment
 - **PyPI** and TestPyPI deployments use [trusted publishing](https://docs.pypi.org/trusted-publishers/). This means that we do not need a secret or token in GitHub. Instead, we configure a specific GitHub environment as trusted source on the PyPI side. If we select this environment in the GitHub workflow, short-lived access tokens will be generated on demand automatically.
 - **Anaconda** uses an access token. The token needs to be generated on the [Anaconda website or CLI](https://www.anaconda.com/docs/tools/anaconda-org/admin-guide/tokens) (scope: "Allow all operations on Conda repositories"). It is *not* added as an organizational secret but as an environment secret to each repository. This token has en expiration date and needs to be renewed yearly.
+
+## PortAudio
+- The `tests`, `docs`, and `coverage` reusable workflows install PortAudio by default.
+- Repositories that do not need PortAudio can disable this setup with the optional `setup_portaudio` input:
+
+```yaml
+jobs:
+  tests:
+    uses: acoular/ci/.github/workflows/tests.yml@main
+    with:
+      src_dir: acoupipe
+      setup_portaudio: false
+```
+

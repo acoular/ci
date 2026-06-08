@@ -7,6 +7,11 @@ on:
         type: string
         required: false
         default: ${{ github.event.repository.name }}
+      setup_portaudio:
+        description: 'Whether PortAudio should be installed.'
+        type: boolean
+        required: false
+        default: true
 
 concurrency:
   group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -28,6 +33,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Set up PortAudio
+        if: ${{ inputs.setup_portaudio }}
         uses: acoular/ci/.github/actions/setup-portaudio@main
         with:
           os: ${{ matrix.os }}

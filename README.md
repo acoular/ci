@@ -35,3 +35,20 @@ jobs:
       setup_portaudio: false
 ```
 
+## Labeler
+- The `labeler` reusable workflow automatically applies labels to pull requests based on the files changed.
+- It uses the [actions/labeler](https://github.com/actions/labeler) action with rules defined in `.github/labeler.yml`.
+- To use it, add a workflow that calls this reusable workflow and create a `labeler.yml` configuration file.
+
+## Label Enforcement
+- The `github` reusable workflow enforces label requirements by default.
+- Repositories that do not want label enforcement can disable it with the optional `enforce_labels` input:
+
+```yaml
+jobs:
+  github:
+    uses: acoular/ci/.github/workflows/github.yml@main
+    with:
+      enforce_labels: false
+```
+

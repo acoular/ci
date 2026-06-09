@@ -12,6 +12,11 @@ on:
         required: false
         default: ''
         type: string
+      setup_portaudio:
+        description: 'Whether PortAudio should be installed.'
+        type: boolean
+        required: false
+        default: true
 
 concurrency:
   group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -36,6 +41,7 @@ jobs:
         with:
           os: ${{ matrix.os }}
       - name: Set up PortAudio
+        if: ${{ inputs.setup_portaudio }}
         uses: acoular/ci/.github/actions/setup-portaudio@main
         with:
           os: ${{ matrix.os }}

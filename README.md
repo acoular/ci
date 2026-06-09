@@ -21,3 +21,17 @@ Environments are hardcoded. Currently, there are
 ## Deployment
 - **PyPI** and TestPyPI deployments use [trusted publishing](https://docs.pypi.org/trusted-publishers/). This means that we do not need a secret or token in GitHub. Instead, we configure a specific GitHub environment as trusted source on the PyPI side. If we select this environment in the GitHub workflow, short-lived access tokens will be generated on demand automatically.
 - **Anaconda** uses an access token. The token needs to be generated on the [Anaconda website or CLI](https://www.anaconda.com/docs/tools/anaconda-org/admin-guide/tokens) (scope: "Allow all operations on Conda repositories"). It is *not* added as an organizational secret but as an environment secret to each repository. This token has en expiration date and needs to be renewed yearly.
+
+## PortAudio
+- The `tests`, `docs`, and `coverage` reusable workflows install PortAudio by default.
+- Repositories that do not need PortAudio can disable this setup with the optional `setup_portaudio` input:
+
+```yaml
+jobs:
+  tests:
+    uses: acoular/ci/.github/workflows/tests.yml@main
+    with:
+      src_dir: acoupipe
+      setup_portaudio: false
+```
+

@@ -12,7 +12,11 @@ authors = [
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
-dependencies = []
+dependencies = ["acoular-ruff", "acoular-sphinx"]
 
 [tool.uv.workspace]
 members = ["packages/*"]
+
+[tool.uv.sources]
+acoular-ruff = { workspace = true }
+acoular-sphinx = { workspace = true }

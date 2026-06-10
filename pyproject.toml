@@ -3,22 +3,20 @@
 #------------------------------------------------------------------------------
 
 [project]
-name = "acoular-ruff"
+name = "acoular-ci-workspace"
 version = "0.1.0"
-description = "Common ruff configuration for the Acoular organization"
+description = "Workspace root for shared Acoular CI tooling"
 requires-python = ">=3.11,<3.15"
 authors = [
     {name = "Acoular Development Team", email = "info@acoular.org"},
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
-dependencies = [
-    "ruff==0.15.16",
-]
+dependencies = ["acoular-ruff", "acoular-sphinx"]
 
-[build-system]
-requires = ["hatchling (>=1.15)"]
-build-backend = "hatchling.build"
+[tool.uv.workspace]
+members = ["packages/*"]
 
-[tool.hatch.build.targets.wheel]
-shared-data = { "ruff.acoular.toml" = "share/ruff/ruff.acoular.toml" }
+[tool.uv.sources]
+acoular-ruff = { workspace = true }
+acoular-sphinx = { workspace = true }

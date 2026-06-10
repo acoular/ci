@@ -1,0 +1,97 @@
+name: Package Documentation Deploy
+permissions:
+  contents: read
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        required: false
+        default: build-docs
+        type: string
+      artifact_path:
+        required: false
+        default: ./docs/build/html
+        type: string
+      destination_dir:
+        required: true
+        type: string
+      external_repository:
+        required: false
+        default: acoular/website
+        type: string
+      publish_branch:
+        required: false
+        default: gh-pages
+        type: string
+      package_path:
+        required: false
+        default: ''
+        type: string
+      min_version:
+        required: false
+        default: ''
+        type: string
+      deploy_switcher:
+        required: false
+        default: false
+        type: boolean
+      switcher_destination_dir:
+        required: false
+        default: ''
+        type: string
+    secrets:
+      website_gh_pages_token:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        if: ${{ inputs.deploy_switcher }}
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ${{ inputs.artifact_path }}
+
+      - name: Generate switcher.json
+        if: ${{ inputs.deploy_switcher }}
+        uses: acoular/ci/.github/actions/generate-switcher@main
+        with:
+          package-path: ${{ inputs.package_path }}
+          min-version: ${{ inputs.min_version }}
+          output: ${{ inputs.artifact_path }}/_static/switcher.json
+
+      - name: Prepare package-root switcher payload
+        if: ${{ inputs.deploy_switcher }}
+        run: |
+          mkdir -p switcher
+          cp "${{ inputs.artifact_path }}/_static/switcher.json" switcher/switcher.json
+
+      - name: Deploy package documentation to website gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          external_repository: ${{ inputs.external_repository }}
+          publish_branch: ${{ inputs.publish_branch }}
+          personal_token: ${{ secrets.website_gh_pages_token }}
+          publish_dir: ${{ inputs.artifact_path }}
+          destination_dir: ${{ inputs.destination_dir }}
+          keep_files: true
+          enable_jekyll: false
+
+      - name: Deploy package-root switcher
+        if: ${{ inputs.deploy_switcher }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          external_repository: ${{ inputs.external_repository }}
+          publish_branch: ${{ inputs.publish_branch }}
+          personal_token: ${{ secrets.website_gh_pages_token }}
+          publish_dir: ./switcher
+          destination_dir: ${{ inputs.switcher_destination_dir }}
+          keep_files: true
+          enable_jekyll: false

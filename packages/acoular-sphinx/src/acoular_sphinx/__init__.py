@@ -4,7 +4,9 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-_TEMPLATE_DIR = Path(__file__).parent / "_templates"
+_PACKAGE_DIR = Path(__file__).parent
+_TEMPLATE_DIR = _PACKAGE_DIR / "_templates"
+_STATIC_DIR = _PACKAGE_DIR / "_static"
 
 _PRIMARY_NAV_LINKS = [
     {"label": "Home", "url": "/", "external": False},
@@ -28,6 +30,11 @@ def build_html_context() -> dict[str, list[dict[str, Any]]]:
 
 
 
+def shared_static_asset(name: str) -> str:
+    return str(_STATIC_DIR / name)
+
+
+
 def configure_theme_options(
     *,
     use_edit_page_button: bool = False,
@@ -45,7 +52,7 @@ def configure_theme_options(
         "icon_links": [
             {
                 "name": "GitHub",
-                "url": "https://github.com/acoular/acoular",
+                "url": "https://github.com/acoular",
                 "icon": "fa-brands fa-square-github",
             },
             {
@@ -79,6 +86,10 @@ def _on_config_inited(app, config) -> None:
     if template_path not in config.templates_path:
         config.templates_path.append(template_path)
 
+    static_path = str(_STATIC_DIR)
+    if static_path not in config.html_static_path:
+        config.html_static_path.append(static_path)
+
 
 
 def setup(app):
@@ -89,4 +100,4 @@ def setup(app):
     }
 
 
-__all__ = ["build_html_context", "configure_theme_options"]
+__all__ = ["build_html_context", "configure_theme_options", "shared_static_asset"]

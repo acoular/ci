@@ -1,0 +1,30 @@
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    {% for link in acoular_nav_links | default([], true) %}
+    <li class="nav-item">
+      <a class="nav-link{% if link.external %} nav-external{% endif %}" href="{{ link.url }}">
+        {{ link.label }}
+      </a>
+    </li>
+    {% endfor %}
+    {% set package_links = acoular_package_links | default([], true) %}
+    {% if package_links %}
+    <li class="nav-item dropdown">
+      <button class="btn dropdown-toggle nav-item" type="button"
+              data-bs-toggle="dropdown" aria-expanded="false"
+              aria-controls="acoular-orga-package-links">
+        Packages
+      </button>
+      <ul id="acoular-orga-package-links" class="dropdown-menu">
+        {% for link in package_links %}
+        <li>
+          <a class="nav-link dropdown-item{% if link.external %} nav-external{% endif %}" href="{{ link.url }}">
+            {{ link.label }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

@@ -1,6 +1,6 @@
 # Acoular Organizational CI
 
-This repository now uses a uv workspace. The root project provides `acoular-ruff`, and additional shared tooling packages live under `packages/`, including `acoular-sphinx` for shared website and documentation frame helpers.
+This repository now uses a uv workspace. Shared tooling packages live under `packages/`, including `acoular-ruff` for common Ruff configuration and `acoular-sphinx` for shared website and documentation frame helpers.
 
 ## Python versions
 - The workflows assumes that there exists a repository variable `SUPPORTED_PYTHON_VERSIONS` with value `["3.10", "3.11", "3.12", "3.13"]` and `LATEST_PYTHON_VERSION` with value `3.13` or similar that lists the supported Python versions of the package. **Note**: need to use double quotes for the array and no quotes for a single version.

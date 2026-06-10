@@ -24,6 +24,10 @@ on:
         required: false
         default: 'build-docs'
         type: string
+      artifact_path:
+        required: false
+        default: './docs/build/html'
+        type: string
       setup_portaudio:
         description: 'Whether PortAudio should be installed.'
         type: boolean
@@ -72,4 +76,4 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: ${{ inputs.artifact_name }}
-          path: ./docs/build/html
+          path: ${{ inputs.artifact_path }}

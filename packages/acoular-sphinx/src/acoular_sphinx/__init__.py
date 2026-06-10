@@ -18,8 +18,8 @@ _PRIMARY_NAV_LINKS = [
 
 _PACKAGE_NAV_LINKS = [
     {"label": "Acoular", "url": "/acoular/", "external": False},
-    {"label": "SpectAcoular", "url": "/spectacoular/", "external": False},
-    {"label": "AcouPipe", "url": "/acoupipe/", "external": False},
+    {"label": "SpectAcoular", "url": "https://acoular.github.io/spectacoular/", "external": True},
+    {"label": "AcouPipe", "url": "https://adku1173.github.io/acoupipe/", "external": True},
 ]
 
 COMMON_EXTENSIONS = [

@@ -125,6 +125,7 @@ def configure_theme_options(
         "header_dropdown_text": "Packages",
         "use_edit_page_button": use_edit_page_button,
         "navbar_center": ["acoular-orga-navbar"],
+        "collapse_navigation": False,
     }
     if switcher_json_url and version_match:
         options["switcher"] = {

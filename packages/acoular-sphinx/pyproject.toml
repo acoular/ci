@@ -8,7 +8,10 @@ authors = [
 ]
 readme = "README.md"
 license = {text = "BSD-3-Clause"}
-dependencies = []
+dependencies = [
+    "pydata-sphinx-theme>=0.18.0",
+    "sphinx-design>=0.6.1",
+]
 
 [build-system]
 requires = ["uv_build>=0.11.19,<0.12"]

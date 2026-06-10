@@ -36,6 +36,27 @@ def configure_theme_options(
     version_match: str | None = None,
 ) -> dict[str, Any]:
     options: dict[str, Any] = {
+        "logo": {
+            "alt_text": "Acoular",
+            "text": "Acoular Organization",
+            "image_light": "_static/Acoular_logo.png",
+            "image_dark": "_static/Acoular_logo.png",
+        },
+        "icon_links": [
+            {
+                "name": "GitHub",
+                "url": "https://github.com/acoular/acoular",
+                "icon": "fa-brands fa-square-github",
+            },
+            {
+                "name": "PyPI",
+                "url": "https://pypi.org/project/acoular",
+                "icon": "_static/pypi.svg",
+                "type": "local",
+            },
+        ],
+        "pygments_light_style": "tango",
+        "pygments_dark_style": "monokai",
         "show_toc_level": show_toc_level,
         "header_links_before_dropdown": 4,
         "header_dropdown_text": "Packages",

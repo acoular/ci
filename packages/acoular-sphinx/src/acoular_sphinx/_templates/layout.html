@@ -92,10 +92,6 @@
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
-      {# If we have no sidebar TOC, pop the TOC component from the sidebars list #}
-      {% if suppress_sidebar_toctree(startdepth=0, includehidden=theme_sidebar_includehidden | tobool) %}
-        {% set sidebars = sidebars | reject("in", ["sidebar-collapse.html", "sidebar-nav-bs.html"]) | list %}
-      {% endif %}
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         {% include "sections/sidebar-primary.html" %}

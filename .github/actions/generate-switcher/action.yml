@@ -1,7 +1,8 @@
 name: Generate Switcher JSON
+
 description: >
   Generate a pydata-sphinx-theme switcher.json from git tags.
-  Writes stable, dev, and release entries for one package documentation path.
+  Writes dev and release entries for one package documentation path.
 
 inputs:
   package-path:
@@ -21,78 +22,23 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Check out repository
+      uses: actions/checkout@v6
       with:
-        python-version: '3.x'
+        fetch-depth: 0
+        clean: false
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        python-version: "3.12"
     - name: Generate switcher.json
-      shell: python3 {0}
+      shell: bash
       run: |
-        import json
-        import os
-        import re
-        import subprocess
+        uv run --group docs python -m acoular_sphinx.scripts.generate_switcher \
+          --output "${{ inputs.output }}" \
+          --package-path "${{ inputs.package-path }}" \
+          --min-version "${{ inputs.min-version }}" \
+          --repo-path "."
 
-        package_path = "${{ inputs.package-path }}".rstrip('/')
-        min_ver = "${{ inputs.min-version }}"
-        output = "${{ inputs.output }}"
-
-        result = subprocess.run(
-            ['git', 'tag', '--merged', 'HEAD', '--list', 'v*'],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        tags = result.stdout.strip().split('\n') if result.stdout.strip() else []
-
-        def version_key(tag):
-            match = re.match(r'^v(\d+)\.(\d+)$', tag)
-            if match:
-                return (int(match.group(1)), int(match.group(2)))
-            return (0, 0)
-
-        def normalize_version(tag):
-            return tag.removeprefix('v')
-
-        filtered = sorted(
-            [tag for tag in tags if re.match(r'^v\d+\.\d+$', tag)],
-            key=version_key,
-            reverse=True,
-        )
-
-        versions = [{
-            'name': 'dev',
-            'version': 'dev',
-            'url': f'{package_path}/dev/',
-            'type': 'branch',
-        }]
-
-        latest_stable = None
-        for tag in filtered:
-            if min_ver and version_key(tag) < version_key(min_ver):
-                continue
-            if latest_stable is None:
-                latest_stable = tag
-                versions.insert(0, {
-                    'name': 'stable',
-                    'version': normalize_version(tag),
-                    'url': f'{package_path}/',
-                    'type': 'tag',
-                    'preferred': True,
-                })
-            versions.append({
-                'name': tag,
-                'version': normalize_version(tag),
-                'url': f'{package_path}/{tag}/',
-                'type': 'tag',
-            })
-
-        parent = os.path.dirname(output)
-        if parent:
-            os.makedirs(parent, exist_ok=True)
-        with open(output, 'w') as handle:
-            json.dump(versions, handle, indent=2)
-
-        print(f'Generated {output} with {len(versions)} versions')
-        if latest_stable:
-            print(f'Latest stable: {latest_stable}')
+        echo "Generated ${{ inputs.output }} with the centralized generator"
+        ls -lh "${{ inputs.output }}"

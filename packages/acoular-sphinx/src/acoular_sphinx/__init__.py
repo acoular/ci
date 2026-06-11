@@ -12,10 +12,22 @@ _STATIC_DIR = _PACKAGE_DIR / "_static"
 _NAV_LINKS = [
     {"label": "Home", "url": "/", "external": False},
     {"label": "Acoular", "url": "/acoular/", "external": False},
-    {"label": "SpectAcoular", "url": "https://acoular.github.io/spectacoular/", "external": True},
-    {"label": "AcouPipe", "url": "https://adku1173.github.io/acoupipe/", "external": True},
+    {
+        "label": "SpectAcoular",
+        "url": "https://acoular.github.io/spectacoular/",
+        "external": True,
+    },
+    {
+        "label": "AcouPipe",
+        "url": "https://adku1173.github.io/acoupipe/",
+        "external": True,
+    },
     {"label": "Blog", "url": "https://blog.acoular.org", "external": True},
-    {"label": "Community", "url": "https://github.com/orgs/acoular/discussions", "external": True},
+    {
+        "label": "Community",
+        "url": "https://github.com/orgs/acoular/discussions",
+        "external": True,
+    },
     {"label": "Contributing", "url": "/contributing/", "external": False},
 ]
 
@@ -49,7 +61,6 @@ def build_html_context() -> dict[str, list[dict[str, Any]]]:
     }
 
 
-
 def build_github_context(
     *,
     github_user: str,
@@ -65,10 +76,8 @@ def build_github_context(
     }
 
 
-
 def shared_static_asset(name: str) -> str:
     return str(_STATIC_DIR / name)
-
 
 
 def resolve_docs_build_config(
@@ -84,7 +93,6 @@ def resolve_docs_build_config(
             default_switcher_json_url,
         ),
     }
-
 
 
 def configure_theme_options(
@@ -134,7 +142,6 @@ def configure_theme_options(
     return options
 
 
-
 def configure_package_theme_options(
     *,
     package_name: str,
@@ -177,7 +184,6 @@ def configure_package_theme_options(
     return options
 
 
-
 def _on_config_inited(app, config) -> None:
     template_path = str(_TEMPLATE_DIR)
     if template_path not in config.templates_path:
@@ -189,7 +195,6 @@ def _on_config_inited(app, config) -> None:
 
     if not config.html_favicon:
         config.html_favicon = shared_static_asset("acoular_favicon.ico")
-
 
 
 def setup(app):

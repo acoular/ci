@@ -16,10 +16,6 @@ on:
         required: false
         default: ''
         type: string
-      docs_switcher_json_url:
-        required: false
-        default: ''
-        type: string
       artifact_name:
         required: false
         default: 'build-docs'
@@ -69,7 +65,6 @@ jobs:
         env:
           DOCS_BASEURL: ${{ inputs.html_baseurl }}
           DOCS_VERSION_MATCH: ${{ inputs.docs_version_match }}
-          DOCS_SWITCHER_JSON_URL: ${{ inputs.docs_switcher_json_url }}
         run: uv run --frozen --exact --group docs make -C docs html
       - name: Upload artifacts
         if: ${{ matrix.os == 'ubuntu-latest' }}

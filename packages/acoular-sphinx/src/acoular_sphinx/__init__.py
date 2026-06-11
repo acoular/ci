@@ -12,11 +12,7 @@ _STATIC_DIR = _PACKAGE_DIR / "_static"
 _NAV_LINKS = [
     {"label": "Home", "url": "/", "external": False},
     {"label": "Acoular", "url": "/acoular/", "external": False},
-    {
-        "label": "SpectAcoular",
-        "url": "https://acoular.github.io/spectacoular/",
-        "external": True,
-    },
+    {"label": "SpectAcoular", "url": "/spectacoular/", "external": False},
     {
         "label": "AcouPipe",
         "url": "https://adku1173.github.io/acoupipe/",

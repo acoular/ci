@@ -9,17 +9,14 @@ _PACKAGE_DIR = Path(__file__).parent
 _TEMPLATE_DIR = _PACKAGE_DIR / "_templates"
 _STATIC_DIR = _PACKAGE_DIR / "_static"
 
-_PRIMARY_NAV_LINKS = [
+_NAV_LINKS = [
     {"label": "Home", "url": "/", "external": False},
-    {"label": "Blog", "url": "https://blog.acoular.org", "external": True},
-    {"label": "Community", "url": "https://github.com/orgs/acoular/discussions", "external": True},
-    {"label": "Contribute", "url": "/contribute/", "external": False},
-]
-
-_PACKAGE_NAV_LINKS = [
     {"label": "Acoular", "url": "/acoular/", "external": False},
     {"label": "SpectAcoular", "url": "https://acoular.github.io/spectacoular/", "external": True},
     {"label": "AcouPipe", "url": "https://adku1173.github.io/acoupipe/", "external": True},
+    {"label": "Blog", "url": "https://blog.acoular.org", "external": True},
+    {"label": "Community", "url": "https://github.com/orgs/acoular/discussions", "external": True},
+    {"label": "Contributing", "url": "/contributing/", "external": False},
 ]
 
 COMMON_EXTENSIONS = [
@@ -48,8 +45,7 @@ PACKAGE_FRAME_EXTENSIONS = [
 
 def build_html_context() -> dict[str, list[dict[str, Any]]]:
     return {
-        "acoular_nav_links": deepcopy(_PRIMARY_NAV_LINKS),
-        "acoular_package_links": deepcopy(_PACKAGE_NAV_LINKS),
+        "acoular_nav_links": deepcopy(_NAV_LINKS),
     }
 
 
@@ -102,8 +98,8 @@ def configure_theme_options(
         "logo": {
             "alt_text": "Acoular",
             "text": "Acoular Organization",
-            "image_light": "_static/Acoular_logo.png",
-            "image_dark": "_static/Acoular_logo.png",
+            "image_light": "_static/acoular_logo_light.png",
+            "image_dark": "_static/acoular_logo_dark.png",
         },
         "icon_links": [
             {
@@ -121,8 +117,8 @@ def configure_theme_options(
         "pygments_light_style": "tango",
         "pygments_dark_style": "monokai",
         "show_toc_level": show_toc_level,
-        "header_links_before_dropdown": 4,
-        "header_dropdown_text": "Packages",
+        "header_links_before_dropdown": 7,
+        "header_dropdown_text": "More",
         "use_edit_page_button": use_edit_page_button,
         "navbar_center": ["acoular-orga-navbar"],
         "collapse_navigation": False,
@@ -133,7 +129,7 @@ def configure_theme_options(
             "version_match": version_match,
         }
         options["show_version_warning_banner"] = True
-        options["navbar_center"].append("version-switcher")
+        options["navbar_start"].append("version-switcher")
     return options
 
 
@@ -159,8 +155,8 @@ def configure_package_theme_options(
             "logo": {
                 "alt_text": f"{package_name} - Home",
                 "text": package_name,
-                "image_light": "_static/Acoular_logo.png",
-                "image_dark": "_static/Acoular_logo.png",
+                "image_light": "_static/acoular_logo_light.png",
+                "image_dark": "_static/acoular_logo_dark.png",
             },
             "icon_links": [
                 {
@@ -191,7 +187,7 @@ def _on_config_inited(app, config) -> None:
         config.html_static_path.append(static_path)
 
     if not config.html_favicon:
-        config.html_favicon = shared_static_asset("acoular_logo.ico")
+        config.html_favicon = shared_static_asset("acoular_favicon.ico")
 
 
 

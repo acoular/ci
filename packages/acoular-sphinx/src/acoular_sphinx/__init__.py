@@ -120,6 +120,7 @@ def configure_theme_options(
         "header_links_before_dropdown": 7,
         "header_dropdown_text": "More",
         "use_edit_page_button": use_edit_page_button,
+        "navbar_start": ["navbar-logo"],
         "navbar_center": ["acoular-orga-navbar"],
         "collapse_navigation": False,
     }

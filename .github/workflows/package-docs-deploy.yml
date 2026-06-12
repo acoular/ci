@@ -32,11 +32,6 @@ jobs:
     steps:
       - name: Prepare payload
         run: mkdir -p "./payload/${{ inputs.package }}/${{ inputs.version }}"
-      - name: Download build artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: ${{ inputs.artifact_name }}
-          path: "./payload/${{ inputs.package }}/${{ inputs.version }}"
       - name: Generate switcher.json
         if: ${{ inputs.deploy_switcher }}
         uses: acoular/ci/.github/actions/generate-switcher@main
@@ -44,12 +39,11 @@ jobs:
           package-path: ${{ inputs.package }}
           min-version: ${{ inputs.min_version }}
           output: "payload/${{ inputs.package }}/_static/switcher.json"
-
-      - name: ls
-        run: |
-          ls "./payload/${{ inputs.package }}"
-          ls "./payload/${{ inputs.package }}/${{ inputs.version }}"
-
+      - name: Download build artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: "./payload/${{ inputs.package }}/${{ inputs.version }}"
       - name: Deploy package documentation to website gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

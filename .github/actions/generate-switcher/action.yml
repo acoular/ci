@@ -7,9 +7,9 @@ description: >
 inputs:
   package-path:
     description: >
-      Package documentation path, e.g. /acoular or /spectacoular.
+      Package documentation path, e.g. /acoular or /spectacoular. '/' gets prepended.
     required: false
-    default: '/acoular'
+    default: 'acoular'
   min-version:
     description: 'Oldest tag to include, e.g. v26.01. Empty string includes all tags.'
     required: false
@@ -36,7 +36,7 @@ runs:
       run: |
         uv run --group docs python -m acoular_sphinx.scripts.generate_switcher \
           --output "${{ inputs.output }}" \
-          --package-path "${{ inputs.package-path }}" \
+          --package-path "/${{ inputs.package-path }}" \
           --min-version "${{ inputs.min-version }}" \
           --repo-path "."
 

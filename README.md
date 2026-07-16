@@ -37,3 +37,7 @@ jobs:
       setup_portaudio: false
 ```
 
+## Labeler
+- The `labeler` reusable workflow automatically applies labels to pull requests based on the files changed.
+- It uses the [actions/labeler](https://github.com/actions/labeler) action with rules defined in `.github/labeler.yml`.
+- To use it, add a workflow that calls this reusable workflow and create a `labeler.yml` configuration file.

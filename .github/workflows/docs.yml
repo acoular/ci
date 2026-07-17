@@ -29,6 +29,25 @@ on:
         type: boolean
         required: false
         default: true
+      package:
+        required: false
+        default: ''
+        type: string
+      version:
+        required: false
+        default: ''
+        type: string
+      min_version:
+        required: false
+        default: ''
+        type: string
+      deploy_switcher:
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      website_gh_pages_token:
+        required: false
 
 concurrency:
   group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -72,3 +91,46 @@ jobs:
         with:
           name: ${{ inputs.artifact_name }}
           path: ${{ inputs.artifact_path }}
+
+  deploy:
+    needs: build
+    if: ${{ inputs.deploy }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve deploy target
+        id: target
+        env:
+          PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [ -z "$PACKAGE" ]; then
+            echo "::error::Provide package when deploy=true"
+            exit 1
+          fi
+
+          echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
+          echo "deploy_path=./payload/$PACKAGE${VERSION:+/$VERSION}" >> "$GITHUB_OUTPUT"
+      - name: Prepare payload
+        run: mkdir -p "${{ steps.target.outputs.deploy_path }}"
+      - name: Generate switcher.json
+        if: ${{ inputs.deploy_switcher }}
+        uses: acoular/ci/.github/actions/generate-switcher@main
+        with:
+          package-path: ${{ steps.target.outputs.package }}
+          min-version: ${{ inputs.min_version }}
+          output: "payload/${{ steps.target.outputs.package }}/_static/switcher.json"
+      - name: Download build artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: "${{ steps.target.outputs.deploy_path }}"
+      - name: Deploy package documentation to website gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          external_repository: acoular/website
+          publish_branch: gh-pages
+          personal_token: ${{ secrets.website_gh_pages_token }}
+          publish_dir: payload/${{ steps.target.outputs.package }}
+          destination_dir: ${{ steps.target.outputs.package }}
+          keep_files: true
+          enable_jekyll: false

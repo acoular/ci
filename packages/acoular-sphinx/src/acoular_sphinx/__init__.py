@@ -10,9 +10,13 @@ _TEMPLATE_DIR = _PACKAGE_DIR / "_templates"
 _STATIC_DIR = _PACKAGE_DIR / "_static"
 
 _NAV_LINKS = [
-    {"label": "Home", "url": "/", "external": False},
-    {"label": "Acoular", "url": "/acoular/", "external": False},
-    {"label": "SpectAcoular", "url": "/spectacoular/", "external": False},
+    {"label": "Home", "url": "https://www.acoular.org/", "external": True},
+    {"label": "Acoular", "url": "https://www.acoular.org/acoular/", "external": True},
+    {
+        "label": "SpectAcoular",
+        "url": "https://www.acoular.org/spectacoular/",
+        "external": True,
+    },
     {
         "label": "AcouPipe",
         "url": "https://adku1173.github.io/acoupipe/",
@@ -24,7 +28,11 @@ _NAV_LINKS = [
         "url": "https://github.com/orgs/acoular/discussions",
         "external": True,
     },
-    {"label": "Contributing", "url": "/contributing/", "external": False},
+    {
+        "label": "Contributing",
+        "url": "https://www.acoular.org/contributing/",
+        "external": True,
+    },
 ]
 
 COMMON_EXTENSIONS = [

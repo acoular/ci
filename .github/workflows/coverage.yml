@@ -46,10 +46,11 @@ jobs:
           echo -e "\`\`\`" >> diff-cover.txt
       - name: Add PR Comment
         if: ${{ github.event_name == 'pull_request' }}
-        uses: thollander/actions-comment-pull-request@v3.0.1
+        uses: marocchino/sticky-pull-request-comment@v3.0.5
         with:
-          file-path: diff-cover.txt
-          comment-tag: diffcov
+          path: diff-cover.txt
+          header: diffcov
+          skip_unchanged: true
       - name: Upload coverage report
         uses: actions/upload-artifact@v7.0.1
         with:

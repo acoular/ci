@@ -14,7 +14,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     steps:
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Upgrade pip
@@ -38,7 +38,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4.0.1
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
@@ -60,9 +60,9 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - name: Check out a copy of the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v9.0.0
         with:
           python-version: ${{ vars.LATEST_PYTHON_VERSION }}
       - name: Run smoke tests

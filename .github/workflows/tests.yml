@@ -27,9 +27,9 @@ jobs:
         python-version: ${{ fromJSON(vars.SUPPORTED_PYTHON_VERSIONS) }}
     steps:
       - name: Check out a copy of the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v9.0.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Set up PortAudio

@@ -17,15 +17,15 @@ jobs:
       - name: Install conda-build
         run: conda install --yes -n base conda-build
       - name: Check out a copy of the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v9.0.0
       - name: Build package
         run: |
           export VERSION=$(uvx hatchling version)  # use hatch-vcs here until uv supports dynamic versions. track: https://github.com/astral-sh/uv/issues/14137
           conda run -n base conda build --channel acoular --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
       - name: Store the distribution packages
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: conda-build
           path: conda-pkg/
@@ -41,7 +41,7 @@ jobs:
       ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8.0.1
         with:
           name: conda-build
           path: conda-pkg/

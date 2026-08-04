@@ -62,9 +62,9 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - name: Check out a copy of the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v9.0.0
         with:
           python-version: ${{ vars.LATEST_PYTHON_VERSION }}
       - name: Set up Pandoc  # for AcouPipe
@@ -87,7 +87,7 @@ jobs:
         run: uv run --frozen --exact --group docs make -C docs html
       - name: Upload artifacts
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: ${{ inputs.artifact_name }}
           path: ${{ inputs.artifact_path }}
@@ -120,12 +120,12 @@ jobs:
           min-version: ${{ inputs.min_version }}
           output: "payload/${{ steps.target.outputs.package }}/_static/switcher.json"
       - name: Download build artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8.0.1
         with:
           name: ${{ inputs.artifact_name }}
           path: "${{ steps.target.outputs.deploy_path }}"
       - name: Deploy package documentation to website gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4.1.0
         with:
           external_repository: acoular/website
           publish_branch: gh-pages

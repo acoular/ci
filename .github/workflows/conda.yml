@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install conda-build
-        run: conda install -n base conda-build
+        run: conda install --yes -n base conda-build
       - name: Check out a copy of the repository
         uses: actions/checkout@v6
       - name: Set up uv
@@ -34,8 +34,11 @@ jobs:
     needs: build
     if: ${{ inputs.deploy }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     environment:
       name: anaconda
+    env:
+      ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v7
@@ -43,8 +46,12 @@ jobs:
           name: conda-build
           path: conda-pkg/
       - name: Install anaconda-client
-        run: conda install -n base anaconda-client
+        run: conda install --yes -n base anaconda-client
       - name: Upload conda package to Anaconda Cloud
         run: |
-          conda run -n base anaconda --verbose login --at anaconda.org --token $ANACONDA_TOKEN
-          conda run -n base anaconda --verbose upload ./conda-pkg/noarch/*.conda
+          if [ -z "${ANACONDA_TOKEN:-}" ]; then
+            echo "::error::ANACONDA_TOKEN is not configured for the anaconda environment."
+            exit 1
+          fi
+          conda run --no-capture-output -n base anaconda --verbose login --at anaconda.org --token "$ANACONDA_TOKEN"
+          conda run --no-capture-output -n base anaconda --verbose upload ./conda-pkg/noarch/*.conda

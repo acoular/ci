@@ -8,6 +8,9 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      ANACONDA_TOKEN:
+        required: false
 
 jobs:
   build:
@@ -35,8 +38,6 @@ jobs:
     if: ${{ inputs.deploy }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    environment:
-      name: anaconda
     env:
       ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
     steps:

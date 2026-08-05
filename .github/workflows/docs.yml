@@ -50,7 +50,7 @@ on:
         required: false
 
 concurrency:
-  group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: docs-${{ github.workflow }}-${{ inputs.artifact_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:

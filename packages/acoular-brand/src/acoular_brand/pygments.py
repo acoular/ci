@@ -12,6 +12,13 @@ with files("acoular_brand").joinpath("theme.toml").open("rb") as _file:
     _THEME = tomllib.load(_file)
 
 
+def _theme_colors(name: str) -> dict[str, str]:
+    return {
+        role: _THEME["colors"][color]
+        for role, color in _THEME[name].items()
+    }
+
+
 def _styles(colors: dict[str, str]) -> dict:
     return {
         Text: colors["text"],
@@ -35,14 +42,16 @@ def _styles(colors: dict[str, str]) -> dict:
 class AcoularLightStyle(Style):
     """Acoular palette on the light documentation background."""
 
-    background_color = _THEME["light"]["surface"]
+    colors = _theme_colors("light")
+    background_color = colors["surface"]
     default_style = ""
-    styles = _styles(_THEME["light"])
+    styles = _styles(colors)
 
 
 class AcoularDarkStyle(Style):
     """Acoular palette on the dark documentation background."""
 
-    background_color = _THEME["dark"]["surface"]
+    colors = _theme_colors("dark")
+    background_color = colors["surface"]
     default_style = ""
-    styles = _styles(_THEME["dark"])
+    styles = _styles(colors)

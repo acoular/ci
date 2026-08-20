@@ -1,42 +1,59 @@
 # The single editable source for Acoular colours.
 
-[light]
-brand = "#0C3762"
-accent = "#005b46"
-hover = "#ffa1d7"
-on_brand = "#f5f9ff"
-background = "#f5f9ff"
-surface = "#f5f9ff"
-text = "#061525"
-muted = "#061525"
-border = "#a4abbd"
+[colors]
+brand = "#0c3762"
+brand-light = "#fbf4d7"
+success = "#005b46"
 warning = "#d9a21b"
-danger = "#A81D1E"
+danger = "#a81d1e"
+secondary-light = "#935160"
+secondary-dark = "#5e2132"
+accent = "#3cc5d0"
+highlight = "#ffa1d7"
+muted-light = "#b6bdce"
+muted = "#8b93a5"
+muted-dark = "#626a7c"
+background-light = "#f5f9ff"
+background-dark = "#061525"
+
+[light]
+brand = "brand"
+accent = "success"
+hover = "highlight"
+on_brand = "background-light"
+background = "background-light"
+surface = "background-light"
+text = "background-dark"
+muted = "background-dark"
+border = "muted-light"
+warning = "warning"
+danger = "danger"
 
 [dark]
-brand = "#fbf4d7"
-accent = "#707788"
-hover = "#ffa1d7"
-on_brand = "#061525"
-background = "#061525"
-surface = "#061525"
-text = "#a4abbd"
-muted = "#a4abbd"
-border = "#707788"
-warning = "#d9a21b"
-danger = "#A81D1E"
+brand = "brand-light"
+accent = "muted-dark"
+hover = "highlight"
+on_brand = "background-dark"
+background = "background-dark"
+surface = "background-dark"
+text = "muted-light"
+muted = "muted-light"
+border = "muted-dark"
+warning = "warning"
+danger = "danger"
 
 [plot]
-# Acoular's qualitative palette, omitting only light background colours.
+# Acoular's qualitative palette, omitting only background colours.
 colors = [
-    "#d9a21b",
-    "#A81D1E",
-    "#5e2132",
-    "#935160",
-    "#005b46",
-    "#0C3762",
-    "#ffa1d7",
-    "#a4abbd",
-    "#707788",
-    "#00c6bc",
+    "warning",
+    "danger",
+    "secondary-dark",
+    "secondary-light",
+    "success",
+    "brand",
+    "highlight",
+    "muted-light",
+    "muted",
+    "muted-dark",
+    "accent",
 ]

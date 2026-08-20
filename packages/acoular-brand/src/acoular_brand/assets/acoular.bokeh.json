@@ -3,15 +3,15 @@
     "Figure": {
       "background_fill_color": "#f5f9ff",
       "border_fill_color": "#f5f9ff",
-      "outline_line_color": "#a4abbd"
+      "outline_line_color": "#b6bdce"
     },
     "Axis": {
-      "axis_line_color": "#a4abbd",
+      "axis_line_color": "#b6bdce",
       "major_label_text_color": "#061525",
       "axis_label_text_color": "#061525"
     },
     "Grid": {
-      "grid_line_color": "#a4abbd",
+      "grid_line_color": "#b6bdce",
       "grid_line_alpha": 0.7
     },
     "Title": {

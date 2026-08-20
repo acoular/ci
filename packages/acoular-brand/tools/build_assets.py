@@ -13,6 +13,22 @@ TOKENS = ROOT / "src" / "acoular_brand" / "theme.toml"
 ASSETS = ROOT / "src" / "acoular_brand" / "assets"
 
 
+def color(tokens: dict, name: str) -> str:
+    return tokens["colors"][name]
+
+
+def render_colors_css(tokens: dict) -> str:
+    variables = "\n".join(
+        f"  --acoular-color-{name}: {value};"
+        for name, value in tokens["colors"].items()
+    )
+    return f"""/* Generated from acoular_brand/theme.toml; do not edit. */
+:root {{
+{variables}
+}}
+"""
+
+
 def render_css(tokens: dict) -> str:
     roles = (
         ("primary", "brand"),
@@ -51,13 +67,15 @@ def render_css(tokens: dict) -> str:
     )
 
     def variables(name: str) -> str:
-        palette = tokens[name]
+        theme = tokens[name]
         return "\n".join(
-            f"  --pst-color-{variable}: {palette[color]};"
+            f"  --pst-color-{variable}: var(--acoular-color-{theme[color]});"
             for variable, color in roles
         )
 
     return f"""/* Generated from acoular_brand/theme.toml; do not edit. */
+@import url("colors.css");
+
 :root,
 html[data-theme=\"light\"] {{
 {variables("light")}
@@ -72,8 +90,8 @@ html[data-theme=\"dark\"] {{
 
 
 def render_mplstyle(tokens: dict) -> str:
-    light = tokens["light"]
-    colors = ", ".join(repr(color) for color in tokens["plot"]["colors"])
+    light = {name: color(tokens, value) for name, value in tokens["light"].items()}
+    colors = ", ".join(repr(color(tokens, name)) for name in tokens["plot"]["colors"])
     return f"""# Generated from acoular_brand/theme.toml; do not edit.
 figure.facecolor: {light["background"]}
 axes.facecolor: {light["background"]}
@@ -93,7 +111,7 @@ figure.constrained_layout.use: True
 
 
 def render_bokeh_theme(tokens: dict) -> str:
-    light = tokens["light"]
+    light = {name: color(tokens, value) for name, value in tokens["light"].items()}
     return json.dumps(
         {
             "attrs": {
@@ -119,6 +137,7 @@ def rendered_assets() -> dict[Path, str]:
     with TOKENS.open("rb") as file:
         tokens = tomllib.load(file)
     return {
+        ASSETS / "colors.css": render_colors_css(tokens),
         ASSETS / "acoular.css": render_css(tokens),
         ASSETS / "acoular.mplstyle": render_mplstyle(tokens),
         ASSETS / "acoular.bokeh.json": render_bokeh_theme(tokens),

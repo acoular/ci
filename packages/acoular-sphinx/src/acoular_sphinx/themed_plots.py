@@ -6,9 +6,15 @@ import os
 from pathlib import Path
 from typing import Any
 
-_DARK_BACKGROUND = "#061525"
-_DARK_FOREGROUND = "#b6bdce"
+_DARK_FOREGROUND = "#f5f9ff"
 _DARK_GRID = "#626a7c"
+_DARK_LINE_COLORS = {
+    "#000000": _DARK_FOREGROUND,
+    "#0c3762": "#fbf4d7",  # brand
+    "#005b46": "#3cc5d0",  # success
+    "#5e2132": "#ffa1d7",  # secondary-dark
+    "#626a7c": "#b6bdce",  # muted-dark
+}
 
 
 def _set_text_color(text: Any, color: str) -> None:
@@ -20,37 +26,53 @@ def apply_dark_theme(figure: Any) -> None:
     """Restyle an existing Matplotlib figure for the dark documentation theme."""
     from matplotlib.text import Text
 
-    figure.set_facecolor(_DARK_BACKGROUND)
-    figure.set_edgecolor(_DARK_BACKGROUND)
     for text in figure.findobj(Text):
         _set_text_color(text, _DARK_FOREGROUND)
 
     for axes in figure.axes:
-        axes.set_facecolor(_DARK_BACKGROUND)
         axes.tick_params(colors=_DARK_FOREGROUND)
+        for line in axes.get_lines():
+            if color := _dark_line_color(line.get_color()):
+                line.set_color(color)
+        if not hasattr(axes, "_colorbar"):
+            for mappable in (*axes.images, *axes.collections):
+                mappable.set_cmap("acoular")
         for spine in axes.spines.values():
             spine.set_color(_DARK_FOREGROUND)
         for line in axes.get_xgridlines() + axes.get_ygridlines():
             line.set_color(_DARK_GRID)
         if legend := axes.get_legend():
-            legend.get_frame().set_facecolor(_DARK_BACKGROUND)
+            legend.get_frame().set_alpha(0)
             legend.get_frame().set_edgecolor(_DARK_FOREGROUND)
+
+
+def _dark_line_color(color: Any) -> str | None:
+    """Return a contrast-safe replacement for a light-theme line colour."""
+    from matplotlib.colors import to_hex
+
+    try:
+        return _DARK_LINE_COLORS.get(to_hex(color))
+    except ValueError:
+        return None
 
 
 def _themed_image_rst(image_path: Path, source_dir: str, alt: str) -> str:
     relative_path = os.path.relpath(image_path, source_dir).replace(os.sep, "/")
     alt = alt.replace("\n", " ")
-    return f""".. container:: acoular-themed-plot
+    dark_path = f"{relative_path.removesuffix(image_path.suffix)}-dark{image_path.suffix}"
+    return f""".. container:: acoular-themed-plot acoular-plot-light
 
    .. image-sg:: /{relative_path}
       :alt: {alt}
       :srcset: /{relative_path}
-      :class: sphx-glr-single-img acoular-plot-light
+      :class: sphx-glr-single-img
 
-   .. image-sg:: /{relative_path.removesuffix(image_path.suffix)}-dark{image_path.suffix}
+.. container:: acoular-themed-plot acoular-plot-dark
+
+   .. image-sg:: /{dark_path}
       :alt: {alt}
-      :srcset: /{relative_path.removesuffix(image_path.suffix)}-dark{image_path.suffix}
-      :class: sphx-glr-single-img acoular-plot-dark
+      :srcset: /{dark_path}
+      :class: sphx-glr-single-img
 
 """
 
@@ -82,10 +104,10 @@ def themed_matplotlib_scraper(block: Any, block_vars: dict[str, Any], gallery_co
     for figure_number, image_path in zip(plt.get_fignums(), image_paths, strict=False):
         light_path = Path(image_path)
         figure = plt.figure(figure_number)
-        figure.savefig(light_path)
+        figure.savefig(light_path, transparent=True)
         apply_dark_theme(figure)
         dark_path = light_path.with_stem(f"{light_path.stem}-dark")
-        figure.savefig(dark_path)
+        figure.savefig(dark_path, transparent=True)
         images_rst.append(
             _themed_image_rst(light_path, gallery_conf["src_dir"], _matplotlib_fig_titles(figure))
         )
@@ -101,5 +123,6 @@ def _configure_sphinx_gallery(_app: Any, config: Any) -> None:
 
 def setup(app: Any) -> dict[str, bool]:
     """Register themed plot scraping after Sphinx-Gallery is configured."""
+    app.add_css_file("sphinx_gallery.css")
     app.connect("config-inited", _configure_sphinx_gallery, priority=1000)
     return {"parallel_read_safe": True, "parallel_write_safe": True}

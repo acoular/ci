@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Callable, Sequence
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -8,6 +9,8 @@ from typing import Any
 from .themed_plots import themed_matplotlib_scraper
 
 from acoular_brand import assets as brand_assets
+from acoular_brand.colormaps import register_colormaps
+from sphinx_gallery.sorting import ExplicitOrder
 
 _PACKAGE_DIR = Path(__file__).parent
 _TEMPLATE_DIR = _PACKAGE_DIR / "_templates"
@@ -55,6 +58,43 @@ PACKAGE_FRAME_EXTENSIONS = [
     "acoular_sphinx.themed_plots",
     "sphinxcontrib.bibtex",
 ]
+
+
+def apply_acoular_mplstyle(_gallery_conf: Any, _fname: str | None, when: str) -> None:
+    """Apply Acoular's Matplotlib style while Sphinx-Gallery runs an example."""
+    if when == "before":
+        import matplotlib.style
+
+        register_colormaps()
+        matplotlib.style.use(str(_BRAND_STATIC_DIR / "acoular.mplstyle"))
+
+
+def configure_sphinx_gallery(
+    *,
+    examples_dirs: Sequence[str],
+    subsection_order: Sequence[str] = (),
+    default_thumb_file: str | None = None,
+    thumbnail_size: tuple[int, int] | None = None,
+    run_stale_examples: bool = False,
+    reset_modules: Sequence[str | Callable[..., None]] = (),
+) -> dict[str, Any]:
+    """Return the shared Sphinx-Gallery configuration for Acoular projects."""
+    gallery_conf: dict[str, Any] = {
+        "gallery_dirs": "auto_examples",
+        "example_extensions": {".py"},
+        "filename_pattern": "/example_",
+        "reset_modules": (*reset_modules, "matplotlib", "seaborn", apply_acoular_mplstyle),
+        "examples_dirs": list(examples_dirs),
+    }
+    if default_thumb_file:
+        gallery_conf["default_thumb_file"] = default_thumb_file
+    if thumbnail_size:
+        gallery_conf["thumbnail_size"] = thumbnail_size
+    if run_stale_examples:
+        gallery_conf["run_stale_examples"] = True
+    if subsection_order:
+        gallery_conf["subsection_order"] = ExplicitOrder(list(subsection_order))
+    return gallery_conf
 
 
 def build_html_context() -> dict[str, list[dict[str, Any]]]:
@@ -215,9 +255,11 @@ def setup(app):
 __all__ = [
     "COMMON_EXTENSIONS",
     "PACKAGE_FRAME_EXTENSIONS",
+    "apply_acoular_mplstyle",
     "build_github_context",
     "build_html_context",
     "configure_package_theme_options",
+    "configure_sphinx_gallery",
     "configure_theme_options",
     "resolve_docs_build_config",
     "shared_static_asset",

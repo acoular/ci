@@ -76,6 +76,8 @@ html[data-theme="light"] {
   --pst-color-surface: var(--acoular-color-background-light);
   --pst-color-on-surface: var(--acoular-color-background-dark);
   --pst-color-inline-code: var(--acoular-color-secondary-dark);
+  --pst-color-target: color-mix(in srgb, var(--acoular-color-highlight) 20%, var(--acoular-color-background-light));
+  --sg-script-out: var(--acoular-color-muted);
   --pst-color-link: var(--acoular-color-brand);
   --pst-color-link-higher-contrast: var(--acoular-color-brand);
   --pst-color-link-hover: var(--acoular-color-highlight);
@@ -112,6 +114,8 @@ html[data-theme="dark"] {
   --pst-color-surface: var(--acoular-color-background-dark);
   --pst-color-on-surface: var(--acoular-color-muted-light);
   --pst-color-inline-code: var(--acoular-color-secondary-light);
+  --pst-color-target: color-mix(in srgb, var(--acoular-color-highlight) 20%, var(--acoular-color-background-dark));
+  --sg-script-out: var(--acoular-color-muted-light);
   --pst-color-link: var(--acoular-color-brand-light);
   --pst-color-link-higher-contrast: var(--acoular-color-brand-light);
   --pst-color-link-hover: var(--acoular-color-highlight);
@@ -129,15 +133,15 @@ html[data-theme="light"] code.literal {
   border-color: var(--acoular-color-secondary-dark);
 }
 
-.acoular-themed-plot > img:nth-child(2) {
+.acoular-plot-dark {
   display: none;
 }
 
-html[data-theme="dark"] .acoular-themed-plot > img:first-child {
+html[data-theme="dark"] .acoular-plot-light {
   display: none;
 }
 
-html[data-theme="dark"] .acoular-themed-plot > img:nth-child(2) {
+html[data-theme="dark"] .acoular-plot-dark {
   display: block;
 }
 

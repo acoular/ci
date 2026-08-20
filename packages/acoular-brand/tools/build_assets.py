@@ -43,6 +43,7 @@ font.sans-serif: Roboto, Roboto Condensed, DejaVu Sans, Arial, sans-serif
 font.monospace: Source Code Pro, DejaVu Sans Mono, monospace
 text.color: {mpl_color("brand")}
 text.usetex: True
+image.cmap: acoular
 axes.labelcolor: {mpl_color("brand")}
 axes.edgecolor: {mpl_color("brand")}
 axes.titlecolor: {mpl_color("brand")}

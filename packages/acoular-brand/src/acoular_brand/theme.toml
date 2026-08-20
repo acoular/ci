@@ -16,6 +16,8 @@ muted-dark = "#626a7c"
 background-light = "#f5f9ff"
 background-dark = "#061525"
 
+[colormap]
+colors = ["background-dark", "brand", "highlight", "brand-light", "background-light"]
 
 [plot]
 # Acoular's qualitative palette, omitting only background colours.

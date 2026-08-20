@@ -1,0 +1,83 @@
+/* Generated from acoular_brand/theme.toml; do not edit. */
+@import url("acoular.css");
+
+:root,
+html[data-theme="light"] {
+  --pst-color-primary: var(--acoular-color-brand);
+  --pst-color-primary-text: var(--acoular-color-background-light);
+  --pst-color-primary-bg: var(--acoular-color-brand);
+  --pst-color-primary-highlight: var(--acoular-color-highlight);
+  --pst-color-secondary: var(--acoular-color-highlight);
+  --pst-color-secondary-text: var(--acoular-color-background-light);
+  --pst-color-secondary-bg: var(--acoular-color-success);
+  --pst-color-secondary-highlight: var(--acoular-color-highlight);
+  --pst-color-accent: var(--acoular-color-success);
+  --pst-color-accent-bg: var(--acoular-color-background-light);
+  --pst-color-info: var(--acoular-color-brand);
+  --pst-color-info-bg: var(--acoular-color-background-light);
+  --pst-color-success: var(--acoular-color-success);
+  --pst-color-success-bg: var(--acoular-color-background-light);
+  --pst-color-warning: var(--acoular-color-warning);
+  --pst-color-warning-bg: var(--acoular-color-background-light);
+  --pst-color-attention: var(--acoular-color-warning);
+  --pst-color-attention-bg: var(--acoular-color-background-light);
+  --pst-color-danger: var(--acoular-color-danger);
+  --pst-color-danger-bg: var(--acoular-color-background-light);
+  --pst-color-text-base: var(--acoular-color-background-dark);
+  --pst-color-text-muted: var(--acoular-color-background-dark);
+  --pst-color-heading: var(--acoular-color-background-dark);
+  --pst-color-border: var(--acoular-color-muted-light);
+  --pst-color-border-muted: var(--acoular-color-muted-light);
+  --pst-color-background: var(--acoular-color-background-light);
+  --pst-color-on-background: var(--acoular-color-background-light);
+  --pst-color-surface: var(--acoular-color-background-light);
+  --pst-color-on-surface: var(--acoular-color-background-dark);
+  --pst-color-inline-code: var(--acoular-color-success);
+  --pst-color-link: var(--acoular-color-brand);
+  --pst-color-link-higher-contrast: var(--acoular-color-brand);
+  --pst-color-link-hover: var(--acoular-color-highlight);
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: var(--acoular-color-brand-light);
+  --pst-color-primary-text: var(--acoular-color-background-dark);
+  --pst-color-primary-bg: var(--acoular-color-brand-light);
+  --pst-color-primary-highlight: var(--acoular-color-highlight);
+  --pst-color-secondary: var(--acoular-color-highlight);
+  --pst-color-secondary-text: var(--acoular-color-background-dark);
+  --pst-color-secondary-bg: var(--acoular-color-muted-dark);
+  --pst-color-secondary-highlight: var(--acoular-color-highlight);
+  --pst-color-accent: var(--acoular-color-muted-dark);
+  --pst-color-accent-bg: var(--acoular-color-background-dark);
+  --pst-color-info: var(--acoular-color-brand-light);
+  --pst-color-info-bg: var(--acoular-color-background-dark);
+  --pst-color-success: var(--acoular-color-muted-dark);
+  --pst-color-success-bg: var(--acoular-color-background-dark);
+  --pst-color-warning: var(--acoular-color-warning);
+  --pst-color-warning-bg: var(--acoular-color-background-dark);
+  --pst-color-attention: var(--acoular-color-warning);
+  --pst-color-attention-bg: var(--acoular-color-background-dark);
+  --pst-color-danger: var(--acoular-color-danger);
+  --pst-color-danger-bg: var(--acoular-color-background-dark);
+  --pst-color-text-base: var(--acoular-color-muted-light);
+  --pst-color-text-muted: var(--acoular-color-muted-light);
+  --pst-color-heading: var(--acoular-color-muted-light);
+  --pst-color-border: var(--acoular-color-muted-dark);
+  --pst-color-border-muted: var(--acoular-color-muted-dark);
+  --pst-color-background: var(--acoular-color-background-dark);
+  --pst-color-on-background: var(--acoular-color-background-dark);
+  --pst-color-surface: var(--acoular-color-background-dark);
+  --pst-color-on-surface: var(--acoular-color-muted-light);
+  --pst-color-inline-code: var(--acoular-color-muted-dark);
+  --pst-color-link: var(--acoular-color-brand-light);
+  --pst-color-link-higher-contrast: var(--acoular-color-brand-light);
+  --pst-color-link-hover: var(--acoular-color-highlight);
+}
+
+html[data-theme="light"] pre {
+  background-color: var(--acoular-color-muted-light);
+}
+
+html[data-theme="dark"] pre {
+  background-color: var(--acoular-color-muted-dark);
+}

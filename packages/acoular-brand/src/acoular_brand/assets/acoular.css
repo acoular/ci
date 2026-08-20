@@ -1,77 +1,17 @@
 /* Generated from acoular_brand/theme.toml; do not edit. */
-@import url("colors.css");
-
-:root,
-html[data-theme="light"] {
-  --pst-color-primary: var(--acoular-color-brand);
-  --pst-color-primary-text: var(--acoular-color-background-light);
-  --pst-color-primary-bg: var(--acoular-color-brand);
-  --pst-color-primary-highlight: var(--acoular-color-highlight);
-  --pst-color-secondary: var(--acoular-color-success);
-  --pst-color-secondary-text: var(--acoular-color-background-light);
-  --pst-color-secondary-bg: var(--acoular-color-success);
-  --pst-color-secondary-highlight: var(--acoular-color-highlight);
-  --pst-color-accent: var(--acoular-color-success);
-  --pst-color-accent-bg: var(--acoular-color-background-light);
-  --pst-color-info: var(--acoular-color-brand);
-  --pst-color-info-bg: var(--acoular-color-background-light);
-  --pst-color-success: var(--acoular-color-success);
-  --pst-color-success-bg: var(--acoular-color-background-light);
-  --pst-color-warning: var(--acoular-color-warning);
-  --pst-color-warning-bg: var(--acoular-color-background-light);
-  --pst-color-attention: var(--acoular-color-warning);
-  --pst-color-attention-bg: var(--acoular-color-background-light);
-  --pst-color-danger: var(--acoular-color-danger);
-  --pst-color-danger-bg: var(--acoular-color-background-light);
-  --pst-color-text-base: var(--acoular-color-background-dark);
-  --pst-color-text-muted: var(--acoular-color-background-dark);
-  --pst-color-heading: var(--acoular-color-background-dark);
-  --pst-color-border: var(--acoular-color-muted-light);
-  --pst-color-border-muted: var(--acoular-color-muted-light);
-  --pst-color-background: var(--acoular-color-background-light);
-  --pst-color-on-background: var(--acoular-color-background-light);
-  --pst-color-surface: var(--acoular-color-background-light);
-  --pst-color-on-surface: var(--acoular-color-background-dark);
-  --pst-color-inline-code: var(--acoular-color-success);
-  --pst-color-link: var(--acoular-color-brand);
-  --pst-color-link-higher-contrast: var(--acoular-color-brand);
-  --pst-color-link-hover: var(--acoular-color-highlight);
+:root {
+  --acoular-color-brand: #0c3762;
+  --acoular-color-brand-light: #fbf4d7;
+  --acoular-color-success: #005b46;
+  --acoular-color-warning: #d9a21b;
+  --acoular-color-danger: #a81d1e;
+  --acoular-color-secondary-light: #935160;
+  --acoular-color-secondary-dark: #5e2132;
+  --acoular-color-accent: #3cc5d0;
+  --acoular-color-highlight: #ffa1d7;
+  --acoular-color-muted-light: #b6bdce;
+  --acoular-color-muted: #8b93a5;
+  --acoular-color-muted-dark: #626a7c;
+  --acoular-color-background-light: #f5f9ff;
+  --acoular-color-background-dark: #061525;
 }
-
-html[data-theme="dark"] {
-  --pst-color-primary: var(--acoular-color-brand-light);
-  --pst-color-primary-text: var(--acoular-color-background-dark);
-  --pst-color-primary-bg: var(--acoular-color-brand-light);
-  --pst-color-primary-highlight: var(--acoular-color-highlight);
-  --pst-color-secondary: var(--acoular-color-muted-dark);
-  --pst-color-secondary-text: var(--acoular-color-background-dark);
-  --pst-color-secondary-bg: var(--acoular-color-muted-dark);
-  --pst-color-secondary-highlight: var(--acoular-color-highlight);
-  --pst-color-accent: var(--acoular-color-muted-dark);
-  --pst-color-accent-bg: var(--acoular-color-background-dark);
-  --pst-color-info: var(--acoular-color-brand-light);
-  --pst-color-info-bg: var(--acoular-color-background-dark);
-  --pst-color-success: var(--acoular-color-muted-dark);
-  --pst-color-success-bg: var(--acoular-color-background-dark);
-  --pst-color-warning: var(--acoular-color-warning);
-  --pst-color-warning-bg: var(--acoular-color-background-dark);
-  --pst-color-attention: var(--acoular-color-warning);
-  --pst-color-attention-bg: var(--acoular-color-background-dark);
-  --pst-color-danger: var(--acoular-color-danger);
-  --pst-color-danger-bg: var(--acoular-color-background-dark);
-  --pst-color-text-base: var(--acoular-color-muted-light);
-  --pst-color-text-muted: var(--acoular-color-muted-light);
-  --pst-color-heading: var(--acoular-color-muted-light);
-  --pst-color-border: var(--acoular-color-muted-dark);
-  --pst-color-border-muted: var(--acoular-color-muted-dark);
-  --pst-color-background: var(--acoular-color-background-dark);
-  --pst-color-on-background: var(--acoular-color-background-dark);
-  --pst-color-surface: var(--acoular-color-background-dark);
-  --pst-color-on-surface: var(--acoular-color-muted-light);
-  --pst-color-inline-code: var(--acoular-color-muted-dark);
-  --pst-color-link: var(--acoular-color-brand-light);
-  --pst-color-link-higher-contrast: var(--acoular-color-brand-light);
-  --pst-color-link-hover: var(--acoular-color-highlight);
-}
-
-

@@ -17,7 +17,7 @@ def color(tokens: dict, name: str) -> str:
     return tokens["colors"][name]
 
 
-def render_colors_css(tokens: dict) -> str:
+def render_acoular_css(tokens: dict) -> str:
     variables = "\n".join(
         f"  --acoular-color-{name}: {value};"
         for name, value in tokens["colors"].items()
@@ -29,13 +29,13 @@ def render_colors_css(tokens: dict) -> str:
 """
 
 
-def render_css(tokens: dict) -> str:
+def render_pydata_css(tokens: dict) -> str:
     roles = (
         ("primary", "brand"),
         ("primary-text", "on_brand"),
         ("primary-bg", "brand"),
         ("primary-highlight", "hover"),
-        ("secondary", "accent"),
+        ("secondary", "hover"),
         ("secondary-text", "on_brand"),
         ("secondary-bg", "accent"),
         ("secondary-highlight", "hover"),
@@ -73,8 +73,14 @@ def render_css(tokens: dict) -> str:
             for variable, color in roles
         )
 
+    def code_background(name: str) -> str:
+        return f'''html[data-theme="{name}"] pre {{
+  background-color: var(--acoular-color-{tokens[name]["code"]});
+}}
+'''
+
     return f"""/* Generated from acoular_brand/theme.toml; do not edit. */
-@import url("colors.css");
+@import url("acoular.css");
 
 :root,
 html[data-theme=\"light\"] {{
@@ -85,8 +91,8 @@ html[data-theme=\"dark\"] {{
 {variables("dark")}
 }}
 
-
-"""
+{code_background("light")}
+{code_background("dark")}"""
 
 
 def render_mplstyle(tokens: dict) -> str:
@@ -137,8 +143,8 @@ def rendered_assets() -> dict[Path, str]:
     with TOKENS.open("rb") as file:
         tokens = tomllib.load(file)
     return {
-        ASSETS / "colors.css": render_colors_css(tokens),
-        ASSETS / "acoular.css": render_css(tokens),
+        ASSETS / "acoular.css": render_acoular_css(tokens),
+        ASSETS / "pydata.css": render_pydata_css(tokens),
         ASSETS / "acoular.mplstyle": render_mplstyle(tokens),
         ASSETS / "acoular.bokeh.json": render_bokeh_theme(tokens),
     }

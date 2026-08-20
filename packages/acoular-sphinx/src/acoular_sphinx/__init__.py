@@ -193,8 +193,8 @@ def _on_config_inited(app, config) -> None:
         if static_path not in config.html_static_path:
             config.html_static_path.append(static_path)
 
-    if "acoular.css" not in config.html_css_files:
-        config.html_css_files.append("acoular.css")
+    if "pydata.css" not in config.html_css_files:
+        config.html_css_files.append("pydata.css")
 
     if not config.html_favicon:
         config.html_favicon = shared_static_asset("acoular_favicon.ico")

@@ -9,6 +9,10 @@ authors = [
 readme = "README.md"
 license = {text = "BSD-3-Clause"}
 
+[project.entry-points."pygments.styles"]
+acoular-light = "acoular_brand.pygments:AcoularLightStyle"
+acoular-dark = "acoular_brand.pygments:AcoularDarkStyle"
+
 [build-system]
 requires = ["uv_build>=0.11.19,<0.12"]
 build-backend = "uv_build"

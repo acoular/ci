@@ -3,21 +3,27 @@
 [light]
 brand = "#0C3762"
 accent = "#005b46"
+hover = "#ffa1d7"
+on_brand = "#f5f9ff"
 background = "#f5f9ff"
-surface = "#fbf4d7"
+surface = "#f5f9ff"
 text = "#061525"
-muted = "#707788"
+muted = "#061525"
 border = "#a4abbd"
+warning = "#d9a21b"
 danger = "#A81D1E"
 
 [dark]
-brand = "#ffa1d7"
-accent = "#00c6bc"
+brand = "#fbf4d7"
+accent = "#707788"
+hover = "#ffa1d7"
+on_brand = "#061525"
 background = "#061525"
-surface = "#0C3762"
-text = "#fbf4d7"
+surface = "#061525"
+text = "#a4abbd"
 muted = "#a4abbd"
 border = "#707788"
+warning = "#d9a21b"
 danger = "#A81D1E"
 
 [plot]

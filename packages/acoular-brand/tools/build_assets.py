@@ -14,29 +14,60 @@ ASSETS = ROOT / "src" / "acoular_brand" / "assets"
 
 
 def render_css(tokens: dict) -> str:
+    roles = (
+        ("primary", "brand"),
+        ("primary-text", "on_brand"),
+        ("primary-bg", "brand"),
+        ("primary-highlight", "hover"),
+        ("secondary", "accent"),
+        ("secondary-text", "on_brand"),
+        ("secondary-bg", "accent"),
+        ("secondary-highlight", "hover"),
+        ("accent", "accent"),
+        ("accent-bg", "surface"),
+        ("info", "brand"),
+        ("info-bg", "surface"),
+        ("success", "accent"),
+        ("success-bg", "surface"),
+        ("warning", "warning"),
+        ("warning-bg", "surface"),
+        ("attention", "warning"),
+        ("attention-bg", "surface"),
+        ("danger", "danger"),
+        ("danger-bg", "surface"),
+        ("text-base", "text"),
+        ("text-muted", "muted"),
+        ("heading", "text"),
+        ("border", "border"),
+        ("border-muted", "border"),
+        ("background", "background"),
+        ("on-background", "surface"),
+        ("surface", "surface"),
+        ("on-surface", "text"),
+        ("inline-code", "accent"),
+        ("link", "brand"),
+        ("link-higher-contrast", "brand"),
+        ("link-hover", "hover"),
+    )
+
     def variables(name: str) -> str:
         palette = tokens[name]
         return "\n".join(
-            f"  --ac-color-{key}: {value};" for key, value in palette.items()
+            f"  --pst-color-{variable}: {palette[color]};"
+            for variable, color in roles
         )
 
     return f"""/* Generated from acoular_brand/theme.toml; do not edit. */
 :root,
 html[data-theme=\"light\"] {{
 {variables("light")}
-  --pst-color-primary: var(--ac-color-brand);
-  --pst-color-secondary: var(--ac-color-accent);
-  --pst-color-link: var(--ac-color-brand);
-  --pst-color-link-hover: var(--ac-color-accent);
 }}
 
 html[data-theme=\"dark\"] {{
 {variables("dark")}
-  --pst-color-primary: var(--ac-color-brand);
-  --pst-color-secondary: var(--ac-color-accent);
-  --pst-color-link: var(--ac-color-brand);
-  --pst-color-link-hover: var(--ac-color-accent);
 }}
+
+
 """
 
 

@@ -5,9 +5,12 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from acoular_brand import assets as brand_assets
+
 _PACKAGE_DIR = Path(__file__).parent
 _TEMPLATE_DIR = _PACKAGE_DIR / "_templates"
 _STATIC_DIR = _PACKAGE_DIR / "_static"
+_BRAND_STATIC_DIR = Path(brand_assets.__file__).parent
 
 _NAV_LINKS = [
     {"label": "Home", "url": "/", "external": False},
@@ -118,8 +121,8 @@ def configure_theme_options(
                 "type": "local",
             },
         ],
-        "pygments_light_style": "tango",
-        "pygments_dark_style": "monokai",
+        "pygments_light_style": "acoular-light",
+        "pygments_dark_style": "acoular-dark",
         "show_toc_level": show_toc_level,
         "header_links_before_dropdown": 7,
         "header_dropdown_text": "More",
@@ -185,9 +188,13 @@ def _on_config_inited(app, config) -> None:
     if template_path not in config.templates_path:
         config.templates_path.append(template_path)
 
-    static_path = str(_STATIC_DIR)
-    if static_path not in config.html_static_path:
-        config.html_static_path.append(static_path)
+    for static_dir in (_STATIC_DIR, _BRAND_STATIC_DIR):
+        static_path = str(static_dir)
+        if static_path not in config.html_static_path:
+            config.html_static_path.append(static_path)
+
+    if "acoular.css" not in config.html_css_files:
+        config.html_css_files.append("acoular.css")
 
     if not config.html_favicon:
         config.html_favicon = shared_static_asset("acoular_favicon.ico")

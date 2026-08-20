@@ -5,8 +5,8 @@ axes.edgecolor: #a4abbd
 axes.labelcolor: #061525
 axes.titlecolor: #061525
 text.color: #061525
-xtick.color: #707788
-ytick.color: #707788
+xtick.color: #061525
+ytick.color: #061525
 grid.color: #a4abbd
 grid.alpha: 0.7
 axes.grid: True

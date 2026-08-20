@@ -1,0 +1,15 @@
+# Generated from acoular_brand/theme.toml; do not edit.
+figure.facecolor: #f5f9ff
+axes.facecolor: #f5f9ff
+axes.edgecolor: #a4abbd
+axes.labelcolor: #061525
+axes.titlecolor: #061525
+text.color: #061525
+xtick.color: #707788
+ytick.color: #707788
+grid.color: #a4abbd
+grid.alpha: 0.7
+axes.grid: True
+axes.prop_cycle: cycler('color', ['#d9a21b', '#A81D1E', '#5e2132', '#935160', '#005b46', '#0C3762', '#ffa1d7', '#a4abbd', '#707788', '#00c6bc'])
+lines.linewidth: 1.8
+figure.constrained_layout.use: True

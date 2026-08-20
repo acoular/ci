@@ -1,0 +1,31 @@
+/* Generated from acoular_brand/theme.toml; do not edit. */
+:root,
+html[data-theme="light"] {
+  --ac-color-brand: #0C3762;
+  --ac-color-accent: #005b46;
+  --ac-color-background: #f5f9ff;
+  --ac-color-surface: #fbf4d7;
+  --ac-color-text: #061525;
+  --ac-color-muted: #707788;
+  --ac-color-border: #a4abbd;
+  --ac-color-danger: #A81D1E;
+  --pst-color-primary: var(--ac-color-brand);
+  --pst-color-secondary: var(--ac-color-accent);
+  --pst-color-link: var(--ac-color-brand);
+  --pst-color-link-hover: var(--ac-color-accent);
+}
+
+html[data-theme="dark"] {
+  --ac-color-brand: #ffa1d7;
+  --ac-color-accent: #00c6bc;
+  --ac-color-background: #061525;
+  --ac-color-surface: #0C3762;
+  --ac-color-text: #fbf4d7;
+  --ac-color-muted: #a4abbd;
+  --ac-color-border: #707788;
+  --ac-color-danger: #A81D1E;
+  --pst-color-primary: var(--ac-color-brand);
+  --pst-color-secondary: var(--ac-color-accent);
+  --pst-color-link: var(--ac-color-brand);
+  --pst-color-link-hover: var(--ac-color-accent);
+}

@@ -5,6 +5,8 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from .themed_plots import themed_matplotlib_scraper
+
 from acoular_brand import assets as brand_assets
 
 _PACKAGE_DIR = Path(__file__).parent
@@ -50,6 +52,7 @@ PACKAGE_FRAME_EXTENSIONS = [
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx_gallery.gen_gallery",
+    "acoular_sphinx.themed_plots",
     "sphinxcontrib.bibtex",
 ]
 
@@ -193,15 +196,16 @@ def _on_config_inited(app, config) -> None:
         if static_path not in config.html_static_path:
             config.html_static_path.append(static_path)
 
-    if "pydata.css" not in config.html_css_files:
-        config.html_css_files.append("pydata.css")
+    app.add_css_file("pydata.css")
 
     if not config.html_favicon:
         config.html_favicon = shared_static_asset("acoular_favicon.ico")
 
 
+
 def setup(app):
-    app.connect("config-inited", _on_config_inited)
+    app.add_config_value("acoular_sphinx_themed_plots", True, "env", types=[bool])
+    app.connect("config-inited", _on_config_inited, priority=1000)
     return {
         "parallel_read_safe": True,
         "parallel_write_safe": True,
@@ -217,4 +221,5 @@ __all__ = [
     "configure_theme_options",
     "resolve_docs_build_config",
     "shared_static_asset",
+    "themed_matplotlib_scraper",
 ]

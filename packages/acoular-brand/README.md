@@ -11,6 +11,6 @@ uv run python packages/acoular-brand/tools/build_assets.py --check
 ```
 
 Consumers can resolve files with `importlib.resources.files("acoular_brand.assets")`.
-Use `acoular.css` for named `--acoular-color-*` CSS variables. `pydata.css`
-imports it and configures PyData Sphinx Theme. Use `acoular.mplstyle` with
-`matplotlib.style.use`, and `acoular.bokeh.json` through Bokeh's `Theme`.
+Use `acoular.css` for named `--acoular-color-*` CSS variables and
+`acoular.mplstyle` with `matplotlib.style.use`. `acoular-sphinx` provides
+`pydata.css`, which imports `acoular.css` and configures PyData Sphinx Theme.

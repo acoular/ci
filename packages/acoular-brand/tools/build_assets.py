@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import tomllib
 from pathlib import Path
 
@@ -29,114 +28,37 @@ def render_acoular_css(tokens: dict) -> str:
 """
 
 
-def render_pydata_css(tokens: dict) -> str:
-    roles = (
-        ("primary", "brand"),
-        ("primary-text", "on_brand"),
-        ("primary-bg", "brand"),
-        ("primary-highlight", "hover"),
-        ("secondary", "hover"),
-        ("secondary-text", "on_brand"),
-        ("secondary-bg", "accent"),
-        ("secondary-highlight", "hover"),
-        ("accent", "accent"),
-        ("accent-bg", "surface"),
-        ("info", "brand"),
-        ("info-bg", "surface"),
-        ("success", "accent"),
-        ("success-bg", "surface"),
-        ("warning", "warning"),
-        ("warning-bg", "surface"),
-        ("attention", "warning"),
-        ("attention-bg", "surface"),
-        ("danger", "danger"),
-        ("danger-bg", "surface"),
-        ("text-base", "text"),
-        ("text-muted", "muted"),
-        ("heading", "text"),
-        ("border", "border"),
-        ("border-muted", "border"),
-        ("background", "background"),
-        ("on-background", "surface"),
-        ("surface", "surface"),
-        ("on-surface", "text"),
-        ("inline-code", "accent"),
-        ("link", "brand"),
-        ("link-higher-contrast", "brand"),
-        ("link-hover", "hover"),
-    )
-
-    def variables(name: str) -> str:
-        theme = tokens[name]
-        return "\n".join(
-            f"  --pst-color-{variable}: var(--acoular-color-{theme[color]});"
-            for variable, color in roles
-        )
-
-    def code_background(name: str) -> str:
-        return f'''html[data-theme="{name}"] pre {{
-  background-color: var(--acoular-color-{tokens[name]["code"]});
-}}
-'''
-
-    return f"""/* Generated from acoular_brand/theme.toml; do not edit. */
-@import url("acoular.css");
-
-:root,
-html[data-theme=\"light\"] {{
-{variables("light")}
-}}
-
-html[data-theme=\"dark\"] {{
-{variables("dark")}
-}}
-
-{code_background("light")}
-{code_background("dark")}"""
-
 
 def render_mplstyle(tokens: dict) -> str:
-    light = {name: color(tokens, value) for name, value in tokens["light"].items()}
-    colors = ", ".join(repr(color(tokens, name)) for name in tokens["plot"]["colors"])
+    def mpl_color(name: str) -> str:
+        return f'"{color(tokens, name)}"'
+
+    colors = ", ".join(
+        f'"{color(tokens, name)}"'
+        for name in ("brand", "danger", "success", "warning", "secondary-light", "muted-dark")
+    )
     return f"""# Generated from acoular_brand/theme.toml; do not edit.
-figure.facecolor: {light["background"]}
-axes.facecolor: {light["background"]}
-axes.edgecolor: {light["border"]}
-axes.labelcolor: {light["text"]}
-axes.titlecolor: {light["text"]}
-text.color: {light["text"]}
-xtick.color: {light["muted"]}
-ytick.color: {light["muted"]}
-grid.color: {light["border"]}
-grid.alpha: 0.7
+font.family: sans-serif
+font.sans-serif: Roboto, Roboto Condensed, DejaVu Sans, Arial, sans-serif
+font.monospace: Source Code Pro, DejaVu Sans Mono, monospace
+text.color: {mpl_color("brand")}
+text.usetex: True
+axes.labelcolor: {mpl_color("brand")}
+axes.edgecolor: {mpl_color("brand")}
+axes.titlecolor: {mpl_color("brand")}
+xtick.color: {mpl_color("brand")}
+ytick.color: {mpl_color("brand")}
+figure.facecolor: {mpl_color("background-light")}
+axes.facecolor: {mpl_color("background-light")}
+savefig.facecolor: {mpl_color("background-light")}
+grid.color: {mpl_color("muted-dark")}
+grid.alpha: 0.25
 axes.grid: True
+axes.axisbelow: True
 axes.prop_cycle: cycler('color', [{colors}])
 lines.linewidth: 1.8
-figure.constrained_layout.use: True
 """
 
-
-def render_bokeh_theme(tokens: dict) -> str:
-    light = {name: color(tokens, value) for name, value in tokens["light"].items()}
-    return json.dumps(
-        {
-            "attrs": {
-                "Figure": {
-                    "background_fill_color": light["background"],
-                    "border_fill_color": light["background"],
-                    "outline_line_color": light["border"],
-                },
-                "Axis": {
-                    "axis_line_color": light["border"],
-                    "major_label_text_color": light["muted"],
-                    "axis_label_text_color": light["text"],
-                },
-                "Grid": {"grid_line_color": light["border"], "grid_line_alpha": 0.7},
-                "Title": {"text_color": light["text"]},
-            }
-        },
-        indent=2,
-    ) + "\n"
 
 
 def rendered_assets() -> dict[Path, str]:
@@ -144,9 +66,7 @@ def rendered_assets() -> dict[Path, str]:
         tokens = tomllib.load(file)
     return {
         ASSETS / "acoular.css": render_acoular_css(tokens),
-        ASSETS / "pydata.css": render_pydata_css(tokens),
         ASSETS / "acoular.mplstyle": render_mplstyle(tokens),
-        ASSETS / "acoular.bokeh.json": render_bokeh_theme(tokens),
     }
 
 

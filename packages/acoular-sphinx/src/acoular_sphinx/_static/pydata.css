@@ -1,5 +1,48 @@
-/* Generated from acoular_brand/theme.toml; do not edit. */
+/* PyData Sphinx Theme overrides using Acoular colour names. */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;600;700&family=Source+Code+Pro:wght@300;400&display=swap");
 @import url("acoular.css");
+
+:root {
+  --pst-font-family-base: Roboto, "Computer Modern", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  --pst-font-family-heading: Roboto, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  --pst-font-family-monospace: "Source Code Pro", "DejaVu Sans Mono", monospace;
+}
+
+h1,
+h5 {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.sd-tab-label code.literal {
+  color: var(--pst-color-link);
+}
+
+#pst-back-to-top,
+#pst-back-to-top:hover {
+  background-color: var(--acoular-color-success);
+  color: var(--acoular-color-background-light);
+}
+
+.admonition,
+div.admonition,
+.admonition[class],
+div.admonition[class] {
+  border-color: var(--acoular-color-accent);
+}
+
+.admonition > .admonition-title,
+div.admonition > .admonition-title,
+.admonition[class] > .admonition-title,
+div.admonition[class] > .admonition-title {
+  background-color: color-mix(in srgb, var(--acoular-color-accent) 10%, transparent);
+}
+
+.admonition > .admonition-title::after,
+div.admonition > .admonition-title::after,
+.admonition[class] > .admonition-title::after,
+div.admonition[class] > .admonition-title::after {
+  color: var(--acoular-color-accent);
+}
 
 :root,
 html[data-theme="light"] {
@@ -32,7 +75,7 @@ html[data-theme="light"] {
   --pst-color-on-background: var(--acoular-color-background-light);
   --pst-color-surface: var(--acoular-color-background-light);
   --pst-color-on-surface: var(--acoular-color-background-dark);
-  --pst-color-inline-code: var(--acoular-color-success);
+  --pst-color-inline-code: var(--acoular-color-secondary-dark);
   --pst-color-link: var(--acoular-color-brand);
   --pst-color-link-higher-contrast: var(--acoular-color-brand);
   --pst-color-link-hover: var(--acoular-color-highlight);
@@ -68,16 +111,44 @@ html[data-theme="dark"] {
   --pst-color-on-background: var(--acoular-color-background-dark);
   --pst-color-surface: var(--acoular-color-background-dark);
   --pst-color-on-surface: var(--acoular-color-muted-light);
-  --pst-color-inline-code: var(--acoular-color-muted-dark);
+  --pst-color-inline-code: var(--acoular-color-secondary-light);
   --pst-color-link: var(--acoular-color-brand-light);
   --pst-color-link-higher-contrast: var(--acoular-color-brand-light);
   --pst-color-link-hover: var(--acoular-color-highlight);
 }
 
-html[data-theme="light"] pre {
-  background-color: var(--acoular-color-muted-light);
+html[data-theme="light"] pre,
+html[data-theme="light"] code.literal {
+  background-color: var(--acoular-color-background-light);
+  background-color: color-mix(in srgb, var(--acoular-color-background-dark) 6%, transparent);
+  border-color: var(--acoular-color-brand);
 }
 
-html[data-theme="dark"] pre {
-  background-color: var(--acoular-color-muted-dark);
+html[data-theme="light"] code.literal {
+  color: var(--acoular-color-brand);
+  border-color: var(--acoular-color-secondary-dark);
+}
+
+.acoular-themed-plot > img:nth-child(2) {
+  display: none;
+}
+
+html[data-theme="dark"] .acoular-themed-plot > img:first-child {
+  display: none;
+}
+
+html[data-theme="dark"] .acoular-themed-plot > img:nth-child(2) {
+  display: block;
+}
+
+html[data-theme="dark"] pre,
+html[data-theme="dark"] code.literal {
+  background-color: var(--acoular-color-background-dark);
+  background-color: color-mix(in srgb, var(--acoular-color-background-light) 6%, transparent);
+  border-color: var(--acoular-color-brand-light);
+}
+
+html[data-theme="dark"] code.literal {
+  color: var(--acoular-color-brand-light);
+  border-color: var(--acoular-color-secondary-light);
 }

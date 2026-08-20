@@ -16,33 +16,6 @@ muted-dark = "#626a7c"
 background-light = "#f5f9ff"
 background-dark = "#061525"
 
-[light]
-brand = "brand"
-accent = "success"
-hover = "highlight"
-on_brand = "background-light"
-background = "background-light"
-surface = "background-light"
-code = "muted-light"
-text = "background-dark"
-muted = "background-dark"
-border = "muted-light"
-warning = "warning"
-danger = "danger"
-
-[dark]
-brand = "brand-light"
-accent = "muted-dark"
-hover = "highlight"
-on_brand = "background-dark"
-background = "background-dark"
-surface = "background-dark"
-code = "muted-dark"
-text = "muted-light"
-muted = "muted-light"
-border = "muted-dark"
-warning = "warning"
-danger = "danger"
 
 [plot]
 # Acoular's qualitative palette, omitting only background colours.

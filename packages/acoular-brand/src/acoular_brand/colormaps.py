@@ -1,12 +1,10 @@
 """Matplotlib colormaps from the Acoular palette."""
 
-from __future__ import annotations
-
 import tomllib
 from importlib.resources import files
 
 
-def register_colormaps() -> None:
+def register_colormaps():
     """Register the ``acoular`` colormap and its ``acoular_r`` inverse."""
     from matplotlib import colormaps
     from matplotlib.colors import LinearSegmentedColormap

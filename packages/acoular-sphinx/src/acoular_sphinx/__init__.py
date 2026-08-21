@@ -1,10 +1,6 @@
-from __future__ import annotations
-
 import os
-from collections.abc import Callable, Sequence
 from copy import deepcopy
 from pathlib import Path
-from typing import Any
 
 from .themed_plots import themed_matplotlib_scraper
 
@@ -60,7 +56,7 @@ PACKAGE_FRAME_EXTENSIONS = [
 ]
 
 
-def apply_acoular_mplstyle(_gallery_conf: Any, _fname: str | None, when: str) -> None:
+def apply_acoular_mplstyle(_gallery_conf, _fname, when):
     """Apply Acoular's Matplotlib style while Sphinx-Gallery runs an example."""
     if when == "before":
         import matplotlib.style
@@ -71,15 +67,15 @@ def apply_acoular_mplstyle(_gallery_conf: Any, _fname: str | None, when: str) ->
 
 def configure_sphinx_gallery(
     *,
-    examples_dirs: Sequence[str],
-    subsection_order: Sequence[str] = (),
-    default_thumb_file: str | None = None,
-    thumbnail_size: tuple[int, int] | None = None,
-    run_stale_examples: bool = False,
-    reset_modules: Sequence[str | Callable[..., None]] = (),
-) -> dict[str, Any]:
+    examples_dirs,
+    subsection_order=(),
+    default_thumb_file=None,
+    thumbnail_size=None,
+    run_stale_examples=False,
+    reset_modules=(),
+):
     """Return the shared Sphinx-Gallery configuration for Acoular projects."""
-    gallery_conf: dict[str, Any] = {
+    gallery_conf = {
         "gallery_dirs": "auto_examples",
         "example_extensions": {".py"},
         "filename_pattern": "/example_",
@@ -97,7 +93,7 @@ def configure_sphinx_gallery(
     return gallery_conf
 
 
-def build_html_context() -> dict[str, list[dict[str, Any]]]:
+def build_html_context():
     return {
         "acoular_nav_links": deepcopy(_NAV_LINKS),
     }
@@ -105,11 +101,11 @@ def build_html_context() -> dict[str, list[dict[str, Any]]]:
 
 def build_github_context(
     *,
-    github_user: str,
-    github_repo: str,
-    doc_path: str,
-    github_version: str = "master",
-) -> dict[str, str]:
+    github_user,
+    github_repo,
+    doc_path,
+    github_version="master",
+):
     return {
         "github_user": github_user,
         "github_repo": github_repo,
@@ -118,15 +114,15 @@ def build_github_context(
     }
 
 
-def shared_static_asset(name: str) -> str:
+def shared_static_asset(name):
     return str(_STATIC_DIR / name)
 
 
 def resolve_docs_build_config(
     *,
-    default_version_match: str = "",
-    default_switcher_json_url: str = "_static/switcher.json",
-) -> dict[str, str]:
+    default_version_match="",
+    default_switcher_json_url="_static/switcher.json",
+):
     return {
         "html_baseurl": os.environ.get("DOCS_BASEURL", ""),
         "version_match": os.environ.get("DOCS_VERSION_MATCH", default_version_match),
@@ -139,12 +135,12 @@ def resolve_docs_build_config(
 
 def configure_theme_options(
     *,
-    use_edit_page_button: bool = False,
-    show_toc_level: int = 1,
-    switcher_json_url: str | None = None,
-    version_match: str | None = None,
-) -> dict[str, Any]:
-    options: dict[str, Any] = {
+    use_edit_page_button=False,
+    show_toc_level=1,
+    switcher_json_url=None,
+    version_match=None,
+):
+    options = {
         "logo": {
             "alt_text": "Acoular",
             "text": "Acoular Organization",
@@ -186,14 +182,14 @@ def configure_theme_options(
 
 def configure_package_theme_options(
     *,
-    package_name: str,
-    github_url: str,
-    pypi_project: str,
-    use_edit_page_button: bool = False,
-    show_toc_level: int = 1,
-    switcher_json_url: str | None = None,
-    version_match: str | None = None,
-) -> dict[str, Any]:
+    package_name,
+    github_url,
+    pypi_project,
+    use_edit_page_button=False,
+    show_toc_level=1,
+    switcher_json_url=None,
+    version_match=None,
+):
     options = configure_theme_options(
         use_edit_page_button=use_edit_page_button,
         show_toc_level=show_toc_level,
@@ -226,7 +222,7 @@ def configure_package_theme_options(
     return options
 
 
-def _on_config_inited(app, config) -> None:
+def _on_config_inited(app, config):
     template_path = str(_TEMPLATE_DIR)
     if template_path not in config.templates_path:
         config.templates_path.append(template_path)

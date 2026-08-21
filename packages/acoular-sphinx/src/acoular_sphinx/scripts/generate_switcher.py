@@ -16,31 +16,28 @@ Example:
                          --repo-path ..
 """
 
-from __future__ import annotations
-
 import argparse
 import json
 import re
 import subprocess
 from pathlib import Path
-from typing import Any
 
 
-def version_key(tag: str) -> tuple[int, int]:
+def version_key(tag):
     match = re.match(r"v(\d+)\.(\d+)$", tag)
     if match:
         return (int(match.group(1)), int(match.group(2)))
     return (0, 0)
 
 
-def normalize_version(tag: str) -> str:
+def normalize_version(tag):
     return tag.removeprefix("v")
 
 
 def get_version_tags(
-    repo_path: str | Path = ".",
-    min_version: str = "",
-) -> list[str]:
+    repo_path=".",
+    min_version="",
+):
     """Get version tags from a git repository."""
     result = subprocess.run(
         ["git", "tag", "--merged", "HEAD", "--list", "v*"],
@@ -66,11 +63,11 @@ def get_version_tags(
 
 
 def generate_switcher_json(
-    output_path: str | Path,
-    package_path: str = "/acoular",
-    min_version: str = "",
-    repo_path: str | Path = ".",
-) -> dict[str, Any]:
+    output_path,
+    package_path="/acoular",
+    min_version="",
+    repo_path=".",
+):
     """
     Generate a version switcher JSON file.
 
@@ -131,7 +128,7 @@ def generate_switcher_json(
     }
 
 
-def main() -> int:
+def main():
     """Parse command line arguments and generate switcher.json."""
     parser = argparse.ArgumentParser(
         description="Generate version switcher JSON for documentation",

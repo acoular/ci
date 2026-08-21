@@ -1,7 +1,5 @@
 """Pygments styles derived from the packaged Acoular theme."""
 
-from __future__ import annotations
-
 import tomllib
 from importlib.resources import files
 
@@ -12,7 +10,7 @@ with files("acoular_brand").joinpath("theme.toml").open("rb") as _file:
     _THEME = tomllib.load(_file)
 
 
-def _theme_colors(**roles: str) -> dict[str, str]:
+def _theme_colors(**roles):
     return {
         role: _THEME["colors"][color]
         for role, color in roles.items()
@@ -45,7 +43,7 @@ _DARK = _theme_colors(
 )
 
 
-def _styles(colors: dict[str, str]) -> dict:
+def _styles(colors):
     return {
         Text: colors["text"],
         Whitespace: "",

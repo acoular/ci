@@ -1,10 +1,7 @@
 """Sphinx-Gallery scraper for light and dark Matplotlib plot assets."""
 
-from __future__ import annotations
-
 import os
 from pathlib import Path
-from typing import Any
 
 _DARK_FOREGROUND = "#f5f9ff"
 _DARK_GRID = "#626a7c"
@@ -17,12 +14,12 @@ _DARK_LINE_COLORS = {
 }
 
 
-def _set_text_color(text: Any, color: str) -> None:
+def _set_text_color(text, color):
     if text is not None:
         text.set_color(color)
 
 
-def apply_dark_theme(figure: Any) -> None:
+def apply_dark_theme(figure):
     """Restyle an existing Matplotlib figure for the dark documentation theme."""
     from matplotlib.text import Text
 
@@ -46,7 +43,7 @@ def apply_dark_theme(figure: Any) -> None:
             legend.get_frame().set_edgecolor(_DARK_FOREGROUND)
 
 
-def _dark_line_color(color: Any) -> str | None:
+def _dark_line_color(color):
     """Return a contrast-safe replacement for a light-theme line colour."""
     from matplotlib.colors import to_hex
 
@@ -56,7 +53,7 @@ def _dark_line_color(color: Any) -> str | None:
         return None
 
 
-def _themed_image_rst(image_path: Path, source_dir: str, alt: str) -> str:
+def _themed_image_rst(image_path, source_dir, alt):
     relative_path = os.path.relpath(image_path, source_dir).replace(os.sep, "/")
     alt = alt.replace("\n", " ")
     dark_path = f"{relative_path.removesuffix(image_path.suffix)}-dark{image_path.suffix}"
@@ -77,7 +74,7 @@ def _themed_image_rst(image_path: Path, source_dir: str, alt: str) -> str:
 """
 
 
-def themed_matplotlib_scraper(block: Any, block_vars: dict[str, Any], gallery_conf: dict[str, Any]) -> str:
+def themed_matplotlib_scraper(block, block_vars, gallery_conf):
     """Save every Gallery Matplotlib figure in light and dark variants.
 
     Examples run once. Their original figure is saved as the light asset, then
@@ -116,12 +113,12 @@ def themed_matplotlib_scraper(block: Any, block_vars: dict[str, Any], gallery_co
     return "".join(images_rst)
 
 
-def _configure_sphinx_gallery(_app: Any, config: Any) -> None:
+def _configure_sphinx_gallery(_app, config):
     if config.acoular_sphinx_themed_plots:
         config.sphinx_gallery_conf["image_scrapers"] = (themed_matplotlib_scraper,)
 
 
-def setup(app: Any) -> dict[str, bool]:
+def setup(app):
     """Register themed plot scraping after Sphinx-Gallery is configured."""
     app.add_css_file("sphinx_gallery.css")
     app.connect("config-inited", _configure_sphinx_gallery, priority=1000)

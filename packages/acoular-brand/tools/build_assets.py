@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Render distributable style assets from ``src/acoular_brand/theme.toml``."""
 
-from __future__ import annotations
-
 import argparse
 import tomllib
 from pathlib import Path
@@ -12,11 +10,11 @@ TOKENS = ROOT / "src" / "acoular_brand" / "theme.toml"
 ASSETS = ROOT / "src" / "acoular_brand" / "assets"
 
 
-def color(tokens: dict, name: str) -> str:
+def color(tokens, name):
     return tokens["colors"][name]
 
 
-def render_acoular_css(tokens: dict) -> str:
+def render_acoular_css(tokens):
     variables = "\n".join(
         f"  --acoular-color-{name}: {value};"
         for name, value in tokens["colors"].items()
@@ -29,8 +27,8 @@ def render_acoular_css(tokens: dict) -> str:
 
 
 
-def render_mplstyle(tokens: dict) -> str:
-    def mpl_color(name: str) -> str:
+def render_mplstyle(tokens):
+    def mpl_color(name):
         return f'"{color(tokens, name)}"'
 
     colors = ", ".join(
@@ -62,7 +60,7 @@ lines.linewidth: 1.8
 
 
 
-def rendered_assets() -> dict[Path, str]:
+def rendered_assets():
     with TOKENS.open("rb") as file:
         tokens = tomllib.load(file)
     return {
@@ -71,7 +69,7 @@ def rendered_assets() -> dict[Path, str]:
     }
 
 
-def main() -> int:
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="fail if assets are stale")
     args = parser.parse_args()

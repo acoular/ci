@@ -3,14 +3,16 @@
 import os
 from pathlib import Path
 
-_DARK_FOREGROUND = "#f5f9ff"
-_DARK_GRID = "#626a7c"
+from acoular_brand.colors import COLORS
+
+_DARK_FOREGROUND = COLORS["background-light"]
+_DARK_GRID = COLORS["muted-dark"]
 _DARK_LINE_COLORS = {
-    "#000000": _DARK_FOREGROUND,
-    "#0c3762": "#fbf4d7",  # brand
-    "#005b46": "#3cc5d0",  # success
-    "#5e2132": "#ffa1d7",  # secondary-dark
-    "#626a7c": "#b6bdce",  # muted-dark
+    COLORS["black"]: _DARK_FOREGROUND,
+    COLORS["brand"]: COLORS["brand-light"],
+    COLORS["success"]: COLORS["accent"],
+    COLORS["secondary-dark"]: COLORS["highlight"],
+    COLORS["muted-dark"]: COLORS["muted-light"],
 }
 
 

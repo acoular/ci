@@ -1,5 +1,6 @@
 /* Generated from acoular_brand/theme.toml; do not edit. */
 :root {
+  --acoular-color-black: #000000;
   --acoular-color-brand: #0c3762;
   --acoular-color-brand-light: #fbf4d7;
   --acoular-color-success: #005b46;

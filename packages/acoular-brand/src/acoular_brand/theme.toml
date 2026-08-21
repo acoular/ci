@@ -1,6 +1,7 @@
 # The single editable source for Acoular colours.
 
 [colors]
+black = "#000000"
 brand = "#0c3762"
 brand-light = "#fbf4d7"
 success = "#005b46"

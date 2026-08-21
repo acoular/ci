@@ -148,8 +148,8 @@ def configure_theme_options(
         "logo": {
             "alt_text": "Acoular",
             "text": "Acoular Organization",
-            "image_light": "_static/acoular_logo_light.png",
-            "image_dark": "_static/acoular_logo_dark.png",
+            "image_light": "_static/acoular_logo.svg",
+            "image_dark": "_static/acoular_logo_dark.svg",
         },
         "icon_links": [
             {
@@ -205,8 +205,8 @@ def configure_package_theme_options(
             "logo": {
                 "alt_text": f"{package_name} - Home",
                 "text": package_name,
-                "image_light": "_static/acoular_logo_light.png",
-                "image_dark": "_static/acoular_logo_dark.png",
+                "image_light": "_static/acoular_logo.svg",
+                "image_dark": "_static/acoular_logo_dark.svg",
             },
             "icon_links": [
                 {

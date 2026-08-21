@@ -145,6 +145,11 @@ html[data-theme="dark"] .acoular-plot-dark {
   display: block;
 }
 
+html[data-theme="dark"] .acoular-plot-dark img.sphx-glr-single-img {
+  background-color: transparent;
+  filter: none;
+}
+
 html[data-theme="dark"] pre,
 html[data-theme="dark"] code.literal {
   background-color: var(--acoular-color-background-dark);

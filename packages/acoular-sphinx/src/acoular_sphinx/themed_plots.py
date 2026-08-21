@@ -35,7 +35,7 @@ def apply_dark_theme(figure):
                 line.set_color(color)
         if not hasattr(axes, "_colorbar"):
             for mappable in (*axes.images, *axes.collections):
-                mappable.set_cmap("acoular")
+                mappable.set_cmap("acoular_r")
         for spine in axes.spines.values():
             spine.set_color(_DARK_FOREGROUND)
         for line in axes.get_xgridlines() + axes.get_ygridlines():
@@ -101,7 +101,7 @@ def themed_matplotlib_scraper(block, block_vars, gallery_conf):
     image_paths = block_vars["image_path_iterator"]
     images_rst = []
     for figure_number, image_path in zip(plt.get_fignums(), image_paths, strict=False):
-        light_path = Path(image_path)
+        light_path = Path(image_path).with_suffix(".svg")
         figure = plt.figure(figure_number)
         figure.savefig(light_path, transparent=True)
         apply_dark_theme(figure)

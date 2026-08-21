@@ -28,7 +28,7 @@ wheels = [
 
 [[package]]
 name = "acoular-brand"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "packages/acoular-brand" }
 
 [[package]]
@@ -36,12 +36,14 @@ name = "acoular-ci-workspace"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "acoular-brand" },
     { name = "acoular-ruff" },
     { name = "acoular-sphinx" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "acoular-brand", editable = "packages/acoular-brand" },
     { name = "acoular-ruff", editable = "packages/acoular-ruff" },
     { name = "acoular-sphinx", editable = "packages/acoular-sphinx" },
 ]

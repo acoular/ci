@@ -1,6 +1,6 @@
 [project]
 name = "acoular-brand"
-version = "0.1.0"
+version = "0.1.1"
 description = "Shared visual design assets for Acoular projects"
 requires-python = ">=3.11,<3.15"
 authors = [

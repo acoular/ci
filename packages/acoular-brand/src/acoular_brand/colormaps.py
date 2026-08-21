@@ -14,7 +14,7 @@ def register_colormaps():
     with files("acoular_brand").joinpath("theme.toml").open("rb") as file:
         theme = tomllib.load(file)
     cmap = LinearSegmentedColormap.from_list(
-        "acoular", [theme["colors"][name] for name in theme["colormap"]["colors"]]
+        "acoular_r", [theme["colors"][name] for name in theme["colormap"]["colors"]]
     )
     colormaps.register(cmap)
-    colormaps.register(cmap.reversed())
+    colormaps.register(cmap.reversed(name="acoular"))

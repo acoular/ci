@@ -43,10 +43,13 @@ text.color: {mpl_color("brand")}
 text.usetex: True
 image.cmap: acoular
 axes.labelcolor: {mpl_color("brand")}
+axes.labelsize: 11
 axes.edgecolor: {mpl_color("brand")}
 axes.titlecolor: {mpl_color("brand")}
 xtick.color: {mpl_color("brand")}
+xtick.labelsize: 11
 ytick.color: {mpl_color("brand")}
+ytick.labelsize: 11
 figure.facecolor: {mpl_color("background-light")}
 axes.facecolor: {mpl_color("background-light")}
 savefig.facecolor: {mpl_color("background-light")}

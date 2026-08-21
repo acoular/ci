@@ -6,10 +6,13 @@ text.color: "#0c3762"
 text.usetex: True
 image.cmap: acoular
 axes.labelcolor: "#0c3762"
+axes.labelsize: 14
 axes.edgecolor: "#0c3762"
 axes.titlecolor: "#0c3762"
 xtick.color: "#0c3762"
+xtick.labelsize: 12
 ytick.color: "#0c3762"
+ytick.labelsize: 12
 figure.facecolor: "#f5f9ff"
 axes.facecolor: "#f5f9ff"
 savefig.facecolor: "#f5f9ff"

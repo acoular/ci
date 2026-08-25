@@ -161,3 +161,8 @@ html[data-theme="dark"] code.literal {
   color: var(--acoular-color-brand-light);
   border-color: var(--acoular-color-secondary-light);
 }
+
+html[data-theme="dark"] div.graphviz > object.graphviz {
+  filter: brightness(0.8) invert(0.82) contrast(1.2);
+  color-scheme: normal;
+}

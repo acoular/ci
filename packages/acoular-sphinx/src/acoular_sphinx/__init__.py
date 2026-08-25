@@ -64,6 +64,7 @@ def apply_acoular_mplstyle(_gallery_conf, _fname, when):
 
         register_colormaps()
         matplotlib.style.use(str(_BRAND_STATIC_DIR / "acoular.mplstyle"))
+        matplotlib.rcParams["text.usetex"] = which("latex") is not None
 
 
 def configure_sphinx_gallery(

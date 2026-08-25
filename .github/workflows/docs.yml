@@ -80,6 +80,9 @@ jobs:
         uses: acoular/ci/.github/actions/setup-graphviz@main
         with:
           os: ${{ matrix.os }}
+      - name: Set up LaTeX
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: sudo apt-get update && sudo apt-get install --yes texlive-latex-extra cm-super dvipng
       - name: Run sphinx
         env:
           DOCS_BASEURL: ${{ inputs.html_baseurl }}

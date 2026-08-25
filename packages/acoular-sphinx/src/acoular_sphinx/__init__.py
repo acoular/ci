@@ -1,4 +1,5 @@
 import os
+from shutil import which
 from copy import deepcopy
 from pathlib import Path
 
@@ -223,6 +224,10 @@ def configure_package_theme_options(
 
 
 def _on_config_inited(app, config):
+    import matplotlib
+
+    matplotlib.rcParams["text.usetex"] = which("latex") is not None
+
     template_path = str(_TEMPLATE_DIR)
     if template_path not in config.templates_path:
         config.templates_path.append(template_path)

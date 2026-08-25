@@ -1,0 +1,29 @@
+@import url("acoular.css");
+
+/* Hide the redundant link to the download section. */
+div.sphx-glr-download-link-note {
+  height: 0;
+  visibility: hidden;
+}
+
+/* Re-style download buttons for the Acoular light and dark themes. */
+div.sphx-glr-download a {
+  background-color: color-mix(in srgb, var(--acoular-color-background-dark) 6%, transparent);
+  background-image: none;
+  border: 1px solid var(--acoular-color-brand);
+  color: var(--acoular-color-brand);
+}
+
+div.sphx-glr-download a:hover {
+  background-color: color-mix(in srgb, var(--acoular-color-background-dark) 12%, transparent);
+}
+
+html[data-theme="dark"] div.sphx-glr-download a {
+  background-color: color-mix(in srgb, var(--acoular-color-background-light) 6%, transparent);
+  border-color: var(--acoular-color-brand-light);
+  color: var(--acoular-color-brand-light);
+}
+
+html[data-theme="dark"] div.sphx-glr-download a:hover {
+  background-color: color-mix(in srgb, var(--acoular-color-background-light) 12%, transparent);
+}

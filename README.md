@@ -16,9 +16,15 @@ This repository now uses a uv workspace. Shared tooling packages live under `pac
 ## Environments
 Environments are hardcoded. Currently, there are
 - `anaconda` (default branch only, requires approval, `ANACONDA_TOKEN` secret)
+- `dependency-bumps` (tag releases, requires approval, `ACOULAR_ORG_BOT_TOKEN` secret)
 - `gh-pages` (only gh-pages)
 - `pypi` (only master-branch, requires approval)
 - `testpypi`
+
+### Downstream dependency bumps
+Pushing a `brand-v*`, `ruff-v*`, or `sphinx-v*` tag opens one pull request in each Acoular repository that pins the released package. The PR updates matching `pyproject.toml` entries and regenerates every `uv.lock` file.
+
+Create the `dependency-bumps` environment and add `ACOULAR_ORG_BOT_TOKEN`: a fine-grained token from the Acoular automation account with **Contents: read and write** and **Pull requests: read and write** access to `ci`, `acoular`, `website`, `rotacoular`, and `spectacoular`. Require the usual approval before it is released to the workflow.
 
 ## Deployment
 - **PyPI** and TestPyPI deployments use [trusted publishing](https://docs.pypi.org/trusted-publishers/). This means that we do not need a secret or token in GitHub. Instead, we configure a specific GitHub environment as trusted source on the PyPI side. If we select this environment in the GitHub workflow, short-lived access tokens will be generated on demand automatically.

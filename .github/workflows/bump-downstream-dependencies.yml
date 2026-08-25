@@ -1,0 +1,67 @@
+name: Bump downstream CI dependencies
+
+on:
+  push:
+    tags:
+      - "brand-v*"
+      - "ruff-v*"
+      - "sphinx-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  open-prs:
+    runs-on: ubuntu-latest
+    environment: dependency-bumps
+    env:
+      GH_TOKEN: ${{ secrets.ACOULAR_ORG_BOT_TOKEN }}
+      TAG: ${{ github.ref_name }}
+      REPOSITORIES: ci acoular website rotacoular spectacoular
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+
+      - uses: astral-sh/setup-uv@v9.0.0
+
+      - name: Open dependency-bump pull requests
+        shell: bash
+        run: |
+          set -euo pipefail
+          package="acoular-${TAG%%-v*}"
+          branch="automation/bump-${TAG}"
+
+          for repository in $REPOSITORIES; do
+            if gh pr list --repo "acoular/$repository" --state open --head "$branch" --json url --jq '.[0].url' | grep -q .; then
+              echo "acoular/$repository already has a PR for $TAG"
+              continue
+            fi
+
+            directory="$RUNNER_TEMP/$repository"
+            gh repo clone "acoular/$repository" "$directory" -- --depth 1
+            python "$GITHUB_WORKSPACE/scripts/bump_ci_dependency.py" \
+              --root "$directory" --package "$package" --tag "$TAG"
+
+            if git -C "$directory" diff --quiet; then
+              echo "acoular/$repository does not use $package"
+              continue
+            fi
+
+            # Refresh every lockfile in the repository after its manifest pins change.
+            while IFS= read -r -d '' lockfile; do
+              uv lock --directory "$(dirname "$lockfile")"
+            done < <(find "$directory" -name uv.lock -print0)
+
+            git -C "$directory" config user.name "acoular-ci-bot"
+            git -C "$directory" config user.email "acoular-ci-bot@users.noreply.github.com"
+            git -C "$directory" switch -c "$branch"
+            git -C "$directory" add --all
+            git -C "$directory" commit -m "chore: bump $package to $TAG"
+            git -C "$directory" push origin "HEAD:$branch"
+            gh pr create \
+              --repo "acoular/$repository" \
+              --head "$branch" \
+              --title "chore: bump $package to $TAG" \
+              --body "Updates every matching pyproject.toml pin and regenerates all uv.lock files."
+          done

@@ -65,3 +65,53 @@ jobs:
               --title "chore: bump $package to $TAG" \
               --body "Updates every matching pyproject.toml pin and regenerates all uv.lock files."
           done
+
+  sync-spectacoular-brand-assets:
+    if: startsWith(github.ref_name, 'brand-v')
+    runs-on: ubuntu-latest
+    environment: dependency-bumps
+    env:
+      GH_TOKEN: ${{ secrets.ACOULAR_ORG_BOT_TOKEN }}
+      TAG: ${{ github.ref_name }}
+      REPOSITORY: spectacoular
+      ASSETS: acoular.css acoular_logo.svg acoular_logo_dark.svg
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Open SpectAcoular brand-asset pull request
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="automation/sync-brand-${TAG}"
+
+          if gh pr list --repo "acoular/${REPOSITORY}" --state open --head "$branch" --json url --jq '.[0].url' | grep -q .; then
+            echo "acoular/${REPOSITORY} already has a PR for $TAG"
+            exit 0
+          fi
+
+          directory="$RUNNER_TEMP/$REPOSITORY"
+          gh repo clone "acoular/$REPOSITORY" "$directory" -- --depth 1
+          destination="$directory/src/spectacoular/themes/assets"
+          mkdir -p "$destination"
+          for asset in $ASSETS; do
+            cp "$GITHUB_WORKSPACE/packages/acoular-brand/src/acoular_brand/assets/$asset" "$destination/$asset"
+          done
+
+          if git -C "$directory" diff --quiet; then
+            echo "acoular/${REPOSITORY} already has the assets from $TAG"
+            exit 0
+          fi
+
+          git -C "$directory" config user.name "acoular-ci-bot"
+          git -C "$directory" config user.email "acoular-ci-bot@users.noreply.github.com"
+          git -C "$directory" switch -c "$branch"
+          git -C "$directory" add src/spectacoular/themes/assets
+          git -C "$directory" commit -m "chore: sync brand assets from $TAG"
+          git -C "$directory" push origin "HEAD:$branch"
+          gh pr create \
+            --repo "acoular/$REPOSITORY" \
+            --head "$branch" \
+            --title "chore: sync brand assets from $TAG" \
+            --body "Copies the SpectAcoular runtime theme assets from $TAG."

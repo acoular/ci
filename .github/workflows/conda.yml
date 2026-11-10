@@ -18,7 +18,10 @@ jobs:
       - name: Build package
         run: |
           export VERSION=$(uvx hatchling version)  # use hatch-vcs here until uv supports dynamic versions. track: https://github.com/astral-sh/uv/issues/14137
-          conda run -n base conda build --channel acoular --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
+          # explicit channel URL: a bare `--channel acoular` is resolved by conda to the
+          # local ./acoular package directory of the calling repo (no repodata -> 404),
+          # which newer conda versions treat as fatal UnavailableInvalidChannel
+          conda run -n base conda build --channel https://conda.anaconda.org/acoular --channel conda-forge --no-anaconda-upload --no-copy-test-source-files recipe.local --output-folder ./conda-pkg
       - name: Store the distribution packages
         uses: actions/upload-artifact@v7.0.1
         with:
